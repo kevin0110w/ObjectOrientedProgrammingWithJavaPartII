@@ -9,5 +9,19 @@
  * @author Freckles
  */
 public class Flight {
+    private Airplane plane;
+    private String departureAirportCode;
+    private String destinationAirportCode;
+    
+    public Flight(Airplane plane,String departureAirportCode,String destinationAirportCode) {
+        this.plane = plane;
+        this.departureAirportCode = departureAirportCode;
+        this.destinationAirportCode = destinationAirportCode;
+    }
+    
+    
+    public String toString() {
+        return this.plane + " (" + this.departureAirportCode + "-" + this.destinationAirportCode + ")";
+    }
     
 }
