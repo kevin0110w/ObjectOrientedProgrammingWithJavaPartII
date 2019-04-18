@@ -34,8 +34,9 @@ public class GameManager {
     public void getPlayers() {
         System.out.println("Write the names of the participants one at a time; an empty string brings you to the jumping phase.");
         String jumpersName = "";
+        
         do {
-            System.out.print("Participant name: ");
+            System.out.print("\tParticipant name: ");
             jumpersName = this.scanner.nextLine();
             if (jumpersName.equals("")) {
                 break;
@@ -45,8 +46,8 @@ public class GameManager {
     }
     
     public void play() {
-        System.out.println("Kumpula ski jumping week");
-        System.out.println();
+//        System.out.println("Kumpula ski jumping week");
+//        System.out.println();
         this.getPlayers();
         System.out.println();
         System.out.println("The tournament begins!");
