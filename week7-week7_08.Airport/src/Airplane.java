@@ -1,18 +1,31 @@
 
-import java.util.ArrayList;
-
 public class Airplane {
+
     private String id;
     private int capacity;
-    private ArrayList<Airplane> airplaneList;
-    
-    
-    public Airplane(String id, Integer capacity) {
+
+    public Airplane(String id, int capacity) {
         this.id = id;
         this.capacity = capacity;
-        this.airplaneList = new ArrayList<Airplane>();
     }
-    public void addAirplane(Airplane airplane) {
-        this.airplaneList.add(airplane);
+
+    public void setID(String id) {
+        this.id = id;
+    }
+
+    public String getID() {
+        return this.id;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public int getCapacity() {
+        return this.capacity;
+    }
+
+    public String toString() {
+        return this.id + " (" + this.capacity + " ppl)";
     }
 }
