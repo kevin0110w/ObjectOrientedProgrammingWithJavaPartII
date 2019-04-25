@@ -7,7 +7,13 @@ import javax.swing.*;
 public class UserInterface implements Runnable {
 
     private JFrame frame;
-
+    private Figure figure;
+    private DrawingBoard board;
+    
+    public UserInterface(Figure afigure) {
+        this.figure = afigure;
+    }
+    
     @Override
     public void run() {
         frame = new JFrame();
@@ -23,6 +29,9 @@ public class UserInterface implements Runnable {
     }
 
     private void createComponents(Container container) {
+        this.board = new DrawingBoard(this.figure);
+        container.add(this.board);
+        frame.addKeyListener(new KeyboardListener(container, this.figure));
     }
 
     private void addListeners() {
