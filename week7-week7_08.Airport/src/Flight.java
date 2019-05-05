@@ -1,11 +1,11 @@
 
 public class Flight {
 
-    private String plane;
+    private Airplane plane;
     private String departureAirportCode;
     private String destinationAirportCode;
 
-    public Flight(String id, String departureAirportCode, String destinationAirportCode) {
+    public Flight(Airplane id, String departureAirportCode, String destinationAirportCode) {
         this.plane = id;
         this.departureAirportCode = departureAirportCode;
         this.destinationAirportCode = destinationAirportCode;

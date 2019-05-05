@@ -60,11 +60,12 @@ public class PanelLogic {
     public void addFlight() {
         System.out.print("Give plane ID: ");
         String id = reader.nextLine();
+        Airplane plane = list.getPlane(id);
         System.out.print("Give departure airport code: ");
         String departureAirportCode = reader.nextLine();
         System.out.print("Give destination airport code: ");
         String destinationAirportCode = reader.nextLine();
-        this.list.addFlight(new Flight(id, departureAirportCode, destinationAirportCode));
+        this.list.addFlight(new Flight(plane, departureAirportCode, destinationAirportCode));
     }
 
     public void handleFlights() {
@@ -109,7 +110,7 @@ public class PanelLogic {
         System.out.print("Give plane ID: ");
         String id = this.reader.nextLine();
         for (Airplane plane : this.list.getPlanes()) {
-            if (id.equals(plane.getID())) {
+            if ((plane.getID().equals(id))) {
                 System.out.println(plane);
             }
         }

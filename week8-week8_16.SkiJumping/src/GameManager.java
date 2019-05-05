@@ -36,7 +36,7 @@ public class GameManager {
         String jumpersName = "";
         
         do {
-            System.out.print("\tParticipant name: ");
+            System.out.print("  Participant name: ");
             jumpersName = this.scanner.nextLine();
             if (jumpersName.equals("")) {
                 break;
@@ -46,13 +46,13 @@ public class GameManager {
     }
     
     public void play() {
-//        System.out.println("Kumpula ski jumping week");
-//        System.out.println();
-        this.getPlayers();
+        System.out.println("Kumpula ski jumping week");
+        System.out.println();
+        getPlayers();
         System.out.println();
         System.out.println("The tournament begins!");
         System.out.println("");
-        System.out.print("Write 'jump' to jump; otherwise you quit: ");
+        System.out.print("Write \"jump\" to jump; otherwise you quit: ");
         String command = this.scanner.nextLine();
         System.out.println("");
         rounds(command);
@@ -63,20 +63,20 @@ public class GameManager {
        while (command.equals("jump")) {
             System.out.println("Round " + this.round);
             System.out.println("");
-            System.out.println("Jumping order");
+            System.out.println("Jumping order: ");
             for (int i = 0; i < this.jumpers.size(); i++) {
-                System.out.println(i+1 + ". " + this.jumpers.get(i));
+                System.out.println("  " + (i+1) + ". " + this.jumpers.get(i));
             }
             System.out.println("");
             System.out.println("Results of round " + this.round);
             for (int i = 0; i < this.jumpers.size(); i++) {
-                System.out.println(this.jumpers.get(i).getName());
+                System.out.println("  " + this.jumpers.get(i).getName());
                 int jump = getJumpersJump();
-                System.out.println("\tlength: " + jump);
+                System.out.println("    length: " + jump);
                 this.jumpers.get(i).addDistance(jump);
                 ArrayList<Integer> judgesVotes = new ArrayList<Integer>();
                 judgesVotes = getJudgesScores();
-                System.out.print("\tjudge votes: " + judgesVotes);
+                System.out.print("    judge votes: " + judgesVotes);
                 Collections.sort(judgesVotes);
                 this.jumpers.get(i).setPoints(jump + judgesVotes.get(1) + judgesVotes.get(2) + judgesVotes.get(3));
                 System.out.println();
@@ -85,7 +85,7 @@ public class GameManager {
             System.out.println();
             System.out.print("Write 'jump' to jump; otherwise you quit: ");
             command = this.scanner.nextLine();
-            System.out.println();
+//            System.out.print();
         }
     }
     
@@ -94,9 +94,9 @@ public class GameManager {
         System.out.println("Thanks!");
         System.out.println();
         System.out.println("Tournament results: ");
-        System.out.println("Position\tName");
+        System.out.println("Position   Name");
         for (int i = 0; i < this.jumpers.size(); i++) {
-            System.out.println(i+1 + "\t\t" + this.jumpers.get(i) + " jump lengths: " + this.jumpers.get(i).getDistances());
-    }
+            System.out.println((i+1) + "           " + this.jumpers.get(i) + "\n             jump lengths: " + this.jumpers.get(i).getDistancesString());
+        }
     }
 }

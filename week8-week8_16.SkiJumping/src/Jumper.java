@@ -37,6 +37,18 @@ public class Jumper {
     }
     
     public String toString() {
-        return this.name + " (" + this.points + ")";
+        return this.name + " (" + this.points + " points)";
+    }
+    
+    public String getDistancesString() {
+        String line = "";
+        for (int i = 0; i < this.distances.size(); i++) {
+            if (i == this.distances.size()-1) {
+                line = line + this.distances.get(i) + " m";
+            } else {
+                line = line +  this.distances.get(i) + " m, ";
+            }
+        }
+        return line;
     }
 }

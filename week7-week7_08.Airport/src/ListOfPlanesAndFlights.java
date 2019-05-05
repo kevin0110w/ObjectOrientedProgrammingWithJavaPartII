@@ -24,6 +24,16 @@ public class ListOfPlanesAndFlights {
             System.out.println(plane);
         }
     }
+    
+    public Airplane getPlane(String name) {
+        Airplane x = null;
+        for (Airplane plane : this.planes) {
+            if (plane.getID().equals(name)) {
+                x = plane;
+            }
+        }
+        return x;
+    }
 
     public void printFlights() {
         for (Flight flight : this.flights) {

@@ -1,6 +1,5 @@
 
 public class Airplane {
-
     private String id;
     private int capacity;
 
