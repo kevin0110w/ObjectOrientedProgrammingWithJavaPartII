@@ -1,12 +1,11 @@
 package game;
-/**
- * not quite 100%
- */
+
 import gameoflife.Simulator;
 
 public class Main {
 
     public static void main(String[] args) {
+
 //        PersonalBoard board = new PersonalBoard(7, 5);
 //        board.turnToLiving(2, 0);
 //        board.turnToLiving(4, 0);
@@ -58,5 +57,6 @@ public class Main {
 //        System.out.println(oa.getNumberOfLivingNeighbours(1, 1));
     PersonalBoard oa1 = new PersonalBoard(1,1);
     oa1.manageCell(0,0, 0);
+
     }
 }

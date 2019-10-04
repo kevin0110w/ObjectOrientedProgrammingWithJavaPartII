@@ -77,12 +77,20 @@ Trying to override old definition of task http://www.netbeans.org/ns/j2se-projec
 init:
 
 -deps-jar-init:
+<<<<<<< HEAD
    [delete] Deleting: /home/woohoo/Downloads/mooc-2013-OOProgrammingWithJava-PART2/week8-week8_16.SkiJumping/build/built-jar.properties
+=======
+   [delete] Deleting: C:\Users\kevin woo hoo\Documents\NetBeansProjects\mooc-2013-OOProgrammingWithJava-PART2\week8-week8_16.SkiJumping\build\built-jar.properties
+>>>>>>> 240a2083f731e583ee4f7550f438a2733cfd1502
 
 deps-jar:
 
 -warn-already-built-jar:
+<<<<<<< HEAD
 [propertyfile] Updating property file: /home/woohoo/Downloads/mooc-2013-OOProgrammingWithJava-PART2/week8-week8_16.SkiJumping/build/built-jar.properties
+=======
+[propertyfile] Updating property file: C:\Users\kevin woo hoo\Documents\NetBeansProjects\mooc-2013-OOProgrammingWithJava-PART2\week8-week8_16.SkiJumping\build\built-jar.properties
+>>>>>>> 240a2083f731e583ee4f7550f438a2733cfd1502
 
 -check-automatic-build:
 
@@ -99,7 +107,11 @@ deps-jar:
 -compile-depend:
 
 -do-compile:
+<<<<<<< HEAD
     [javac] Compiling 1 source file to /home/woohoo/Downloads/mooc-2013-OOProgrammingWithJava-PART2/week8-week8_16.SkiJumping/build/classes
+=======
+    [javac] Compiling 1 source file to C:\Users\kevin woo hoo\Documents\NetBeansProjects\mooc-2013-OOProgrammingWithJava-PART2\week8-week8_16.SkiJumping\build\classes
+>>>>>>> 240a2083f731e583ee4f7550f438a2733cfd1502
     [javac] warning: [options] bootstrap class path not set in conjunction with -source 1.6
     [javac] 1 warning
 
