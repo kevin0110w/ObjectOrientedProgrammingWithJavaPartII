@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class Jumper {
+public class Jumper implements Comparable<Jumper>{
     private String name;
     private int points;
     private ArrayList<Integer> distances;
@@ -50,5 +51,10 @@ public class Jumper {
             }
         }
         return line;
+    }
+
+    @Override
+    public int compareTo(Jumper t) {
+        return t.getPoints() - this.getPoints();
     }
 }

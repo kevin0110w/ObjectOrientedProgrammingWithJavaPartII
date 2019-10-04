@@ -49,6 +49,8 @@ public class UserInterface {
             System.out.println("Round " + this.logic.getRound());
             System.out.println();
             System.out.println("Jumping order: ");
+         this.logic.sortJumpers();
+         this.logic.reverseJumpers();
             int numberOfJumpers = this.logic.getJumpers().size();
             for (int i = 0; i < numberOfJumpers; i++) {
                 System.out.println("  " + (i+1) + ". " + this.logic.getJumpers().get(i));
@@ -57,6 +59,7 @@ public class UserInterface {
     }
     
     public void getResults(){
+
         System.out.println("Results of round " + this.logic.getRound());
             for (int i = 0; i < this.logic.getJumpers().size(); i++) {
                 System.out.println("  " + this.logic.getJumpers().get(i).getName());

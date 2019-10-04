@@ -21,6 +21,7 @@ public class GameManager {
         System.out.println();
         System.out.println("Thanks!");
         System.out.println();
+        Collections.sort(jumpers);
         System.out.println("Tournament results: ");
         System.out.println(String.format("%-12s", "Position") +  "Name");
         for (int i = 0; i < this.jumpers.size(); i++) {
@@ -57,5 +58,13 @@ public class GameManager {
 
     void incRound() {
         this.round++;
+    }
+
+    void sortJumpers() {
+        Collections.sort(jumpers);
+    }
+
+    void reverseJumpers() {
+        Collections.reverse(jumpers);
     }
 }
