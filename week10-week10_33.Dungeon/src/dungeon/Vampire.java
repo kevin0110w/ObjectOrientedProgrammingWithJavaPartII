@@ -1,62 +1,81 @@
-
 package dungeon;
 
 import java.util.Random;
 
-public class Vampire {
-    private int x, y, length, height, temp_X, temp_Y;
-    private Random rand;
-    private final String name;
-    public Vampire(int length, int height) {
-        this.rand = new Random();
-        setStartingPosition(length, height);
-        this.name = "v";
-    }
+/**
+ *
+ * @author woohoo
+ */
+public class Vampire implements Character{
+    public final char name;
+    public int x, y, heightBoundary, lengthBoundary, tempX, tempY;
+    public Random randomX, randomY;
+    public boolean vampiresMove;
     
-    public void move(boolean vampireMove) {
-        if (vampireMove) {
-        this.temp_X = this.rand.nextInt(length);
-        this.temp_Y = this.rand.nextInt(height);
-        }
+    public Vampire(int heightBoundary, int lengthBoundary, boolean vampiresMove) {
+        this.name = 'v';
+        this.heightBoundary = heightBoundary;
+        this.lengthBoundary = lengthBoundary;
+        this.randomY = new Random();
+        this.randomX = new Random();
+        this.vampiresMove = vampiresMove;
+        this.startingPositions();
     }
-    
-    public void newPosition() {
-            this.x = temp_X;
-            this.y = temp_Y;
-    }
-    
-    public int getX() {
-        return x;
-    }
-    
-    public int getY() {
-        return y;
-    }
-    
+
     public int getTempX() {
-        return this.temp_X;
+        return tempX;
     }
-    
+
     public int getTempY() {
-        return this.temp_Y;
+        return tempY;
+    }
+    
+    @Override
+    public int getX() {
+        return this.x;
     }
 
-    
-    public String getName() {
-        return name;
-    }
-    
-    
-    public String toString(){
-        return this.name + " " + this.x + " " + this.y;
+    @Override
+    public int getY() {
+        return this.y;
     }
 
-    private void setStartingPosition(int length, int height) {
-        while (this.x==0) {
-            this.x = rand.nextInt(length);
+    public void generateNewCoordinates() {
+        if (this.vampiresMove) {
+            tempX = this.randomX.nextInt(this.lengthBoundary);
+            tempY = this.randomY.nextInt(this.heightBoundary);
         }
-        while (this.y==0) {
-            this.y = rand.nextInt(height);
+    }
+    
+    public void move(boolean canMove) {
+        if (canMove) {
+        this.x = this.tempX;
+        this.y = this.tempY;
         }
+    }
+    
+
+    @Override
+    public char getName() {
+        return this.name;
+        
+    }
+    
+    @Override
+    public String toString() {
+         return this.name + " " + this.x + " " + this.y;
+    }
+
+    private void startingPositions() {
+        while (true) {
+            this.x = this.randomX.nextInt(this.lengthBoundary);
+            this.tempX = this.x;
+            this.y = this.randomY.nextInt(this.heightBoundary);
+            this.tempY = this.y;
+            if (!(this.x == 0 && this.y == 0)) {
+                return;
+            }
+        }
+        
     }
 }
