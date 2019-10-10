@@ -14,7 +14,7 @@ public class GameOfLifeTester {
     }
 
     public void play() {
-        draw();
+//        draw();
         while (continueTurn()) {
             try {
                 board.playTurn();
@@ -37,6 +37,7 @@ public class GameOfLifeTester {
 
     private static void printCommands() {
         System.out.print("Press enter to continue, any other key quits: ");
+        
     }
 
     public void draw() {
