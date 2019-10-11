@@ -6,61 +6,86 @@
 package reference;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import reference.comparator.FilmComparator;
+import reference.comparator.PersonComparator;
 import reference.domain.Film;
 import reference.domain.Person;
 import reference.domain.Rating;
 
 /**
  *
- * @author kevin0110w
+ * @author woohoo
  */
 public class Reference {
-    private RatingRegister register;
+    private RatingRegister ratings;
     
-    public Reference(RatingRegister register) {
-        this.register = register;
+    public Reference(RatingRegister ratings) {
+        this.ratings = ratings;
     }
     
     public Film recommendFilm(Person person) {
-        Map<Film, List<Rating>> ratings = register.filmRatings();
-        Iterator<Film> it = ratings.keySet().iterator();
-        List<Film> films = new ArrayList<Film>();
-        while (it.hasNext()) {
-            Film f = it.next();
-            films.add(f);
+        // get all films and sort based on the average ratings. if the person hasn't seen any
+        // movies, return the best on average
+        Map<Film, List<Rating>> films = this.ratings.filmRatings();
+        List<Film> filmList = new ArrayList<Film> (films.keySet());
+        Collections.sort(filmList, new FilmComparator(films));
+        
+        if (this.ratings.getPersonalRatings(person).isEmpty()) {
+            return filmList.get(0);
         }
-        Collections.sort(films, new FilmComparator(ratings));
-        return films.get(0);
+        
+        Map<Film, Rating> thisPersonsRating = this.ratings.getPersonalRatings(person);
+        Map<Person, Map<Film, Rating>> otherPersonsRating = new HashMap<Person, Map<Film, Rating>>();
+        List<Person> reviewers = this.ratings.reviewers();
+        
+        if (reviewers.isEmpty()) {
+            return null;
+        }
+        
+        // Work out the similarity scores
+        Map<Person, Integer> similarities = new HashMap<Person, Integer>();
+        int similarity = 0;
+        
+        for (Person p : reviewers) {
+                otherPersonsRating.put(p, this.ratings.getPersonalRatings(p));
+                if (thisPersonsRating.isEmpty()) {
+                    similarities.put(p, similarity);
+                } else {
+                for (Film f : thisPersonsRating.keySet()) {
+                    if (otherPersonsRating.get(p).containsKey(f)) {
+                    similarity = similarity + (thisPersonsRating.get(f).getValue() * otherPersonsRating.get(p).get(f).getValue());
+            }
+                similarities.put(p, similarity);
+        }
+                }
+            similarity = 0;
     }
-    
-    
-    public static void main(String[] args) {
-          RatingRegister ratings = new RatingRegister();
+        
+        // sort the reviewers list such that the most similiar is at the beginning of reviewers
+        Collections.sort(reviewers, new PersonComparator(similarities));
+        
+        Film recommendThis = null;
+        
+        // remove the person we're considering from the list of reviewers
+        reviewers.remove(person);
+        Map<Film, Rating> similarPersonsRating = this.ratings.getPersonalRatings(reviewers.get(0));
+        for (Film f : similarPersonsRating.keySet()) {     
+            if ((!thisPersonsRating.containsKey(f)) && (getNotDownvoted(f,  similarPersonsRating))) {
+                recommendThis = f;
+            }
+        }
+        return recommendThis;
+    }
 
-    Film goneWithTheWind = new Film("Gone with the Wind");
-    Film theBridgesOfMadisonCounty = new Film("The Bridges of Madison County");
-    Film eraserhead = new Film("Eraserhead");
-
-    Person matti = new Person("Matti");
-    Person pekka = new Person("Pekka");
-    Person mikke = new Person("Mikke");
-
-    ratings.addRating(matti, goneWithTheWind, Rating.BAD);
-    ratings.addRating(matti, theBridgesOfMadisonCounty, Rating.GOOD);
-    ratings.addRating(matti, eraserhead, Rating.FINE);
-
-    ratings.addRating(pekka, goneWithTheWind, Rating.FINE);
-    ratings.addRating(pekka, theBridgesOfMadisonCounty, Rating.BAD);
-    ratings.addRating(pekka, eraserhead, Rating.MEDIOCRE);
-
-    Reference ref = new Reference(ratings);
-    Film recommended = ref.recommendFilm(mikke);
-    System.out.println("The film recommended to Michael is: " + recommended);
+    public boolean getNotDownvoted(Film m, Map<Film, Rating> otherPersonRatings) {
+        if (!(otherPersonRatings.containsKey(m))) {
+            return false;
+        } else {
+            return otherPersonRatings.get(m).getValue() > 1;
+        }
     }
 }

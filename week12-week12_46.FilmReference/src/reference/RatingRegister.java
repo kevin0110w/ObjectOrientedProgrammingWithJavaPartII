@@ -7,115 +7,123 @@ package reference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import reference.domain.Film;
-import reference.domain.Person;
 import reference.domain.Rating;
+import reference.domain.Person;
 
 /**
  *
- * @author kevin0110w
+ * @author woohoo
  */
 public class RatingRegister {
-    private Map<Film, List<Rating>> ratings;
-    private Map<Person, HashMap<Film, Rating>> personalRatings;
+    private Map<Film, List<Rating>> allMovieRatings;
+    private Map<Person, Map<Film, Rating>> personalRatings;
+    
     public RatingRegister() {
-        this.ratings = new HashMap<Film, List<Rating>>();
-        this.personalRatings = new HashMap<Person, HashMap<Film, Rating>>();
+        this.allMovieRatings = new HashMap<Film, List<Rating>>();
+        this.personalRatings = new HashMap<Person, Map<Film, Rating>>();
     }
     
+    public Map<Person, Map<Film, Rating>> returnPersonalRatings() {
+        return this.personalRatings;
+    }
+    /**
+     * adds a new rating to the parameter film. The same film can have various same allMovieRatings.
+     * @param film
+     * @param rating 
+     */
     public void addRating(Film film, Rating rating) {
-        if (this.ratings.containsKey(film)) {
-            this.ratings.get(film).add(rating);
-        } else {
-           List<Rating> r = new ArrayList<Rating>();
-           r.add(rating);
-           this.ratings.put(film, r);
-        }
+        List<Rating> aFilmRating = new ArrayList<Rating>();
+        
+        if (this.allMovieRatings.containsKey(film)) {
+            aFilmRating.addAll(this.allMovieRatings.get(film));  
+        } 
+        
+        aFilmRating.add(rating);
+        this.allMovieRatings.put(film, aFilmRating);
     }
     
-    public List<Rating> getRatings(Film film) {
-        return this.ratings.get(film);
+    /**
+     * returns a list of the allMovieRatings which were added in connection to a film.
+     * @param film
+     * @return 
+     */
+    public List<Rating> getRatings(Film film) { 
+        return this.allMovieRatings.get(film);
     }
     
-    public Map<Film, List<Rating>> filmRatings() {
-        Map<Film, List<Rating>> ratings = new HashMap<Film, List<Rating>>();
-        Iterator<Film> it = this.ratings.keySet().iterator();
-        while (it.hasNext()) {
-            Film f = it.next();
-            List<Rating> r = new ArrayList<Rating>();
-            r = this.getRatings(f);
-            ratings.put(f, r);
-        }
-        return ratings;
+    /**
+     * returns a map whose keys are the evaluated films. 
+     * Each film is associated to a list containing the allMovieRatings for that film.
+     * @return 
+     */
+    public Map<Film, List<Rating>> filmRatings() { 
+        
+        return this.allMovieRatings;
     }
     
+    /**
+     *  adds the rating of a specific film to the parameter person. 
+     * The same person can recommend a specific film only once. 
+     * The person rating has also to be added to the ratings connected to all the films.
+     * @param person
+     * @param film
+     * @param rating 
+     */
     public void addRating(Person person, Film film, Rating rating) {
+       Map<Film, Rating> filmRatings = new HashMap<Film, Rating>();
         if (this.personalRatings.containsKey(person)) {
-            this.personalRatings.get(person).put(film, rating);
-            
-        } else {
-        HashMap<Film, Rating> m = new HashMap<Film, Rating>();
-        m.put(film, rating);
-        this.personalRatings.put(person, m);
+           filmRatings = this.personalRatings.get(person);
+           filmRatings.put(film, rating);
+           }
+        else {
+            filmRatings.put(film, rating);
+           this.personalRatings.put(person, filmRatings);
         }
         this.addRating(film, rating);
     }
     
-    public Rating getRating(Person person, Film film) {
-        Map<Film, Rating> m = this.personalRatings.get(person);
-        Rating rating = m.get(film);
-        if (rating == null) {
-            rating = Rating.NOT_WATCHED;
+    /**
+     * returns the rating the paramater person has assigned to the parameter film. 
+     * If the person hasn't evaluated such film, the method returns Rating.NOT_WATCHED.
+     * @param person
+     * @param film
+     * @return 
+     */
+    public Rating getRating(Person person, Film film) { 
+        if (!this.personalRatings.containsKey(person)) {
+            return null;
+        } 
+        if (!(this.personalRatings.get(person).containsKey(film))) {
+            return Rating.NOT_WATCHED;
+        }  else {
+            Rating r = this.personalRatings.get(person).get(film);
+            return r;
         }
-        return rating;
     }
     
-    public Map<Film, Rating> getPersonalRatings(Person person) {
-        Map<Film, Rating> m = this.personalRatings.get(person);
-        return m;
-    }
-    
-    public List<Person> reviewers() {
-        List<Person> p = new ArrayList<Person>();
-        for (Person person : this.personalRatings.keySet()) {
-            p.add(person);
+    /**
+     * returns a HashMap which contains the person's ratings. 
+     * The HashMap keys are the evaluated films, and their values are the ratings of these films.
+     * @param person
+     * @return 
+     */
+    public Map<Film, Rating> getPersonalRatings(Person person) { 
+        if (!(this.personalRatings.containsKey(person))) {
+            Map<Film, Rating> x = new HashMap<Film, Rating>();
+            this.personalRatings.put(person, x);            
         }
-        return p;
+        return this.personalRatings.get(person);
     }
     
-    public static void main(String[] args) {
-//        Film theBridgesOfMadisonCounty = new Film("The Bridges of Madison County");
-//        Film eraserhead = new Film("Eraserhead");
-//
-//        RatingRegister reg = new RatingRegister();
-//        reg.addRating(eraserhead, Rating.BAD);
-//        reg.addRating(eraserhead, Rating.BAD);
-//        reg.addRating(eraserhead, Rating.GOOD);
-//        reg.addRating(theBridgesOfMadisonCounty, Rating.GOOD);
-//        reg.addRating(theBridgesOfMadisonCounty, Rating.FINE);
-//    
-//        System.out.println("All ratings: " + reg.filmRatings());
-//        System.out.println("Ratings for Eraserhead: " + reg.getRatings(eraserhead));
-
-    RatingRegister ratings = new RatingRegister();
-
-    Film goneWithTheWind = new Film("Gone with the Wind");
-    Film eraserhead = new Film("Eraserhead");
-
-    Person matti = new Person("Matti");
-    Person pekka = new Person("Pekka");
-
-    ratings.addRating(matti, goneWithTheWind, Rating.BAD);
-    ratings.addRating(matti, eraserhead, Rating.FINE);
-
-    ratings.addRating(pekka, goneWithTheWind, Rating.GOOD);
-    ratings.addRating(pekka, eraserhead, Rating.GOOD);
-
-    System.out.println("Ratings for Eraserhead: " + ratings.getRatings(eraserhead));
-    System.out.println("Matti's ratings: " + ratings.getPersonalRatings(matti));
-    System.out.println("Reviewers: " + ratings.reviewers());
-    }
+    /**
+     * returns a list of the people who have evaluate the films.
+     * @return 
+     */
+    public List<Person> reviewers() { 
+        List<Person> reviewers = new ArrayList<Person> (this.personalRatings.keySet());
+        return reviewers;
+    }    
 }

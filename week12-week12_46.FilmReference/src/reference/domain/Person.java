@@ -7,27 +7,49 @@ package reference.domain;
 
 /**
  *
- * @author kevin0110w
+ * @author woohoo
  */
 public class Person {
     private String name;
+
     public Person(String name) {
         this.name = name;
     }
-    
-    public String getName() {
-        return this.name;
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 67 * hash + (this.name != null ? this.name.hashCode() : 0);
+        return hash;
     }
-    
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Person other = (Person) obj;
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public String toString() {
         return this.name;
     }
     
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
     
-    public boolean equals(Person other) {
-        return this.name.equals(other.getName());
-    }
-        public int hashCode() {
-        return this.name.hashCode();
-    }
+    
 }
