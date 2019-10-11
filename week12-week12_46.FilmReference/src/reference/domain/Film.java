@@ -7,26 +7,52 @@ package reference.domain;
 
 /**
  *
- * @author kevin0110w
+ * @author woohoo
  */
 public class Film {
     private String name;
+    
     public Film(String name) {
         this.name = name;
     }
-    
+
     public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 67 * hash + (this.name != null ? this.name.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        final Film other = (Film) obj;
+        
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
+            return false;
+        }
+        
+        return true;
+    }
+
+    @Override
+    public String toString() {
         return this.name;
     }
-    
-        public String toString() {
-        return this.name;
-    }
-    
-    public boolean equals(Film other) {
-        return this.name.equals(other.getName());
-    }
-        public int hashCode() {
-        return this.name.hashCode();
-    }
+
+   
 }
