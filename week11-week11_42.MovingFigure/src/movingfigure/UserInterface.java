@@ -9,11 +9,11 @@ public class UserInterface implements Runnable {
     private JFrame frame;
     private Figure figure;
     private DrawingBoard board;
-    
-    public UserInterface(Figure afigure) {
-        this.figure = afigure;
+
+    public UserInterface(Figure figure) {
+        this.figure = figure; 
     }
-    
+
     @Override
     public void run() {
         frame = new JFrame();
@@ -30,11 +30,13 @@ public class UserInterface implements Runnable {
 
     private void createComponents(Container container) {
         this.board = new DrawingBoard(this.figure);
-        container.add(this.board);
-        frame.addKeyListener(new KeyboardListener(container, this.figure));
+        container.add(board);
+        this.addListeners();
     }
 
     private void addListeners() {
+        KeyboardListener list = new KeyboardListener(this.board, this.figure);
+        this.frame.addKeyListener(list);
     }
 
     public JFrame getFrame() {

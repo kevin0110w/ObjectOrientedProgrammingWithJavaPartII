@@ -6,25 +6,24 @@ public class Main {
         System.out.println(build(t));
     }
 
-    public static String build(int[] t) {       
+    public static String build(int[] t) {
         StringBuilder builder = new StringBuilder();
-        builder.append("{ ");
-        
+        builder.append("{");
+
         for (int i = 0; i < t.length; i++) {
-            // if 4 elements have been appended, add a new line
             if (i % 4 == 0) {
                 builder.append("\n");
+                builder.append(" ");
             }
-            // otherwise append the element
-            builder.append(" " + t[i]);
-            
-            // append a comma after each element is added except the last one.
+
+            builder.append(t[i]);
             if (i != t.length - 1) {
-                builder.append(",");
+                builder.append(", ");
+            } else {
+                builder.append(" ");
             }
         }
-        builder.append("\n");
-        builder.append("}");
+        builder.append("\n}");
         return builder.toString();
     }
 }

@@ -5,21 +5,21 @@
  */
 package movingfigure;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
 /**
  *
- * @author kevin0110w
+ * @author woohoo
  */
 public class DrawingBoard extends JPanel {
     private Figure figure;
-    
-    public DrawingBoard(Figure afigure) {
-        this.figure = afigure;
+
+    public DrawingBoard(Figure figure) {
+        this.figure = figure;
     }
     
-    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.figure.draw(g);

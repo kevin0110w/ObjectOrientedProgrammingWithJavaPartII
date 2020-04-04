@@ -7,17 +7,20 @@ package reader.criteria;
 
 /**
  *
- * @author 
+ * @author woohoo
  */
 public class LengthAtLeast implements Criterion {
-    private int lengthMinimum;
-    
+
+    private int length;
+
     public LengthAtLeast(int length) {
-        this.lengthMinimum = length;
+        this.length = length;
     }
+            
+            
     @Override
     public boolean complies(String line) {
-      return (line.length() >= this.lengthMinimum);
+        return line.length() >= this.length;
     }
     
 }

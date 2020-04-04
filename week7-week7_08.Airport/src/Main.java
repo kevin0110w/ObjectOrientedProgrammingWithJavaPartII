@@ -1,8 +1,8 @@
 
 public class Main {
-
     public static void main(String[] args) {
-        PanelLogic panel = new PanelLogic();
+        // Write your main program here. Implementing your own classes will be useful.
+        AirportPanel panel = new AirportPanel();
         panel.start();
     }
 }

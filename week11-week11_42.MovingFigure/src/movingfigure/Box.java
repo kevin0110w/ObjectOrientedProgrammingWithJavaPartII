@@ -9,9 +9,10 @@ import java.awt.Graphics;
 
 /**
  *
- * @author kevin0110w
+ * @author woohoo
  */
 public class Box extends Figure {
+
     private int width;
     private int height;
 
@@ -21,10 +22,10 @@ public class Box extends Figure {
         this.height = height;
     }
     
+    
     @Override
     public void draw(Graphics graphics) {
-        graphics.fillRect(x, y, this.width, this.height);
+        graphics.fillRect(x, y, width, height);
     }
-    
     
 }

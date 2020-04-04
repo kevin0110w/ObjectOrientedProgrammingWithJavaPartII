@@ -7,8 +7,8 @@ package mooc.ui;
 
 /**
  *
- * @author Freckles
+ * @author woohoo
  */
 public interface UserInterface {
-   void update();
+    void update();
 }

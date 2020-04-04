@@ -19,21 +19,21 @@ import wormgame.domain.Worm;
  * @author woohoo
  */
 public class KeyboardListener implements KeyListener {
+
     private Worm worm;
-    
+
     public KeyboardListener(Worm worm) {
         this.worm = worm;
     }
 
     @Override
-    public void keyTyped(KeyEvent ke) {
-        
+    public void keyTyped(KeyEvent e) {
+
     }
 
     @Override
-    public void keyPressed(KeyEvent ke) {
-        int keycode = ke.getKeyCode();
-        switch (keycode) {
+    public void keyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
             case VK_UP:
                 this.worm.setDirection(Direction.UP);
                 break;
@@ -46,13 +46,12 @@ public class KeyboardListener implements KeyListener {
             case VK_RIGHT:
                 this.worm.setDirection(Direction.RIGHT);
                 break;
+
         }
     }
 
     @Override
-    public void keyReleased(KeyEvent ke) {
+    public void keyReleased(KeyEvent e) {
         
     }
-    
-    
 }

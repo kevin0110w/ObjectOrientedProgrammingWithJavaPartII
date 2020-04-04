@@ -7,35 +7,34 @@ package application;
 
 /**
  *
- * @author Freckles
+ * @author woohoo
  */
 public class ConstantSensor implements Sensor {
-    private int measure;
-    private final boolean isOn;
+    private final int number;
     
-    public ConstantSensor(int measure) {
-        this.measure = measure;
-        this.isOn = true;
+    public ConstantSensor(int number) {
+        this.number = number;
     }
 
+    
     @Override
     public boolean isOn() {
-       return this.isOn;
+        return true;
     }
 
     @Override
     public void on() {
-        
+
     }
 
     @Override
     public void off() {
-        
+
     }
 
     @Override
     public int measure() {
-        return this.measure;
-        }
+        return this.number;
     }
- 
+    
+}

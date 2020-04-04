@@ -14,104 +14,6 @@ import reference.domain.Rating;
 public class Main {
 
     public static void main(String[] args) {
-//         Film theBridgesOfMadisonCounty = new Film("The Bridges of Madison County");
-//    Film eraserhead = new Film("Eraserhead");
-//
-//    RatingRegister reg = new RatingRegister();
-//    reg.addRating(eraserhead, Rating.BAD);
-//    reg.addRating(eraserhead, Rating.BAD);
-//    reg.addRating(eraserhead, Rating.GOOD);
-//
-//    reg.addRating(theBridgesOfMadisonCounty, Rating.GOOD);
-//    reg.addRating(theBridgesOfMadisonCounty, Rating.FINE);
-//
-//    System.out.println("All ratings: " + reg.filmRatings());
-//    System.out.println("Ratings for Eraserhead: " + reg.getRatings(eraserhead));
-// RatingRegister ratings = new RatingRegister();
-//
-//    Film goneWithTheWind = new Film("Gone with the Wind");
-//    Film eraserhead = new Film("Eraserhead");
-//
-//    Person matti = new Person("Matti");
-//    Person pekka = new Person("Pekka");
-//
-//    ratings.addRating(matti, goneWithTheWind, Rating.BAD);
-//    ratings.addRating(matti, eraserhead, Rating.FINE);
-//
-//    ratings.addRating(pekka, goneWithTheWind, Rating.GOOD);
-//    ratings.addRating(pekka, eraserhead, Rating.GOOD);
-//
-//    System.out.println("Ratings for Eraserhead: " + ratings.getRatings(eraserhead));
-//    System.out.println("Matti's ratings: " + ratings.getPersonalRatings(matti));
-//    System.out.println("Reviewers: " + ratings.reviewers());
-//    Person matti = new Person("Matti");
-//    Person pekka = new Person("Pekka");
-//    Person mikke = new Person("Mikke");
-//    Person thomas = new Person("Thomas");
-//
-//    Map<Person, Integer> peopleIdentities = new HashMap<Person, Integer>();
-//    peopleIdentities.put(matti, 42);
-//    peopleIdentities.put(pekka, 134);
-//    peopleIdentities.put(mikke, 8);
-//    peopleIdentities.put(thomas, 82);
-//
-//    List<Person> ppl = Arrays.asList(matti, pekka, mikke, thomas);
-//    System.out.println("People before sorting: " + ppl);
-//
-//    Collections.sort(ppl, new PersonComparator(peopleIdentities));
-//    System.out.println("People after sorting: " + ppl);
-
-//RatingRegister ratings = new RatingRegister();
-//
-//    Film goneWithTheWind = new Film("Gone with the Wind");
-//    Film theBridgesOfMadisonCounty = new Film("The Bridges of Madison County");
-//    Film eraserhead = new Film("Eraserhead");
-//
-//    Person matti = new Person("Matti");
-//    Person pekka = new Person("Pekka");
-//    Person mikke = new Person("Mikke");
-//
-//    ratings.addRating(matti, goneWithTheWind, Rating.BAD);
-//    ratings.addRating(matti, theBridgesOfMadisonCounty, Rating.GOOD);
-//    ratings.addRating(matti, eraserhead, Rating.FINE);
-//
-//    ratings.addRating(pekka, goneWithTheWind, Rating.FINE);
-//    ratings.addRating(pekka, theBridgesOfMadisonCounty, Rating.BAD);
-//    ratings.addRating(pekka, eraserhead, Rating.MEDIOCRE);
-//
-//    ratings.addRating(mikke, eraserhead, Rating.BAD);
-//
-//    Map<Film, List<Rating>> filmRatings = ratings.filmRatings();
-//
-//    List<Film> films = Arrays.asList(goneWithTheWind, theBridgesOfMadisonCounty, eraserhead);
-//    System.out.println("The films before sorting: " + films);
-//
-//    Collections.sort(films, new FilmComparator(filmRatings));
-//    System.out.println("The films after sorting: " + films);
-
-//    RatingRegister ratings = new RatingRegister();
-//
-//    Film goneWithTheWind = new Film("Gone with the Wind");
-//    Film theBridgesOfMadisonCounty = new Film("The Bridges of Madison County");
-//    Film eraserhead = new Film("Eraserhead");
-//
-//    Person matti = new Person("Matti");
-//    Person pekka = new Person("Pekka");
-//    Person mikke = new Person("Mikke");
-//
-//    ratings.addRating(matti, goneWithTheWind, Rating.BAD);
-//    ratings.addRating(matti, theBridgesOfMadisonCounty, Rating.GOOD);
-//    ratings.addRating(matti, eraserhead, Rating.FINE);
-//
-//    ratings.addRating(pekka, goneWithTheWind, Rating.FINE);
-//    ratings.addRating(pekka, theBridgesOfMadisonCounty, Rating.BAD);
-//    ratings.addRating(pekka, eraserhead, Rating.MEDIOCRE);
-//
-//    Reference ref = new Reference(ratings);
-//    Film recommended = ref.recommendFilm(mikke);
-//    System.out.println("The film recommended to Michael is: " + recommended);
-
-
     RatingRegister ratings = new RatingRegister();
 
     Film goneWithTheWind = new Film("Gone with the Wind");
@@ -143,18 +45,5 @@ public class Main {
     System.out.println(mikke + " recommendation: " + ref.recommendFilm(mikke));
     System.out.println(matti + " recommendation: " + ref.recommendFilm(matti));
     System.out.println(arto + " recommendation: " + ref.recommendFilm(arto));
-
-
-
-//RatingRegister rek = new RatingRegister();
-//Person h1 = new Person("Pekka");
-//Person h2 = new Person("Arto");
-//rek.addRating(h1, new Film("Pulp fiction"), Rating.FINE);
-//rek.addRating(h1, new Film("Eraserhead"), Rating.GOOD);
-//rek.addRating(h2, new Film("Eraserhead"), Rating.BAD);
-//rek.addRating(h2, new Film("Pulp fiction"), Rating.NEUTRAL);
-//rek.addRating(h2, new Film("Rambo"), Rating.GOOD);
-//        System.out.println(rek.getRating(h1, new Film("Rambo") ));
-       
     }
 }

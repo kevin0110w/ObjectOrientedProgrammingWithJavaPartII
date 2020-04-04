@@ -1,3 +1,4 @@
+
 public class Card implements Comparable<Card> {
 
     /*
@@ -38,20 +39,20 @@ public class Card implements Comparable<Card> {
 
     @Override
     public int compareTo(Card o) {
-        if (this.getValue() - o.getValue() < 0) {
+        if (this.value < o.getValue()) {
             return -1;
-        } else if (this.getValue() - o.getValue() > 0) {
+        } else if (this.value > o.getValue()) {
             return 1;
-        } else if (this.getValue() - o.getValue() == 0) {
-        if (this.getSuit() - o.getSuit() < 0) {
-            return -1;
-        }  else if (this.getSuit() - o.getSuit() > 0) {
-            return 1;
-        } else {
-            return 0;
+        } else if (this.value == o.getValue()) {
+            if (this.suit < o.getSuit()) {
+                return -1;
+            } else if (this.suit > o.getSuit()) {
+                return 1;
+            } else {
+                return 0;
+            }
         }
-    } else {
-            return 0;
-        }
+        return 0;
     }
+
 }

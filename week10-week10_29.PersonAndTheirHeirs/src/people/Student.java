@@ -7,40 +7,28 @@ package people;
 
 /**
  *
- * @author Freckles
+ * @author woohoo
  */
 public class Student extends Person {
+
     private int credits;
-    
+
     public Student(String name, String address) {
         super(name, address);
         this.credits = 0;
     }
-    
+
     public void study() {
         this.credits++;
     }
-    
+
     public int credits() {
         return this.credits;
     }
-    
-//     public static void main(String[] args) {
-//        Student olli = new Student("Olli", "Ida Albergintie Street 1 00400 Helsinki");
-//        System.out.println(olli);
-//        System.out.println("credits " + olli.credits());
-//        olli.study();
-//        System.out.println("credits "+ olli.credits());
-//    }
-     
-     @Override
-     public String toString() {
-         return super.toString() + "\n  credits " + this.credits();
-     }
-      public static void main(String[] args) {
-        Student olli = new Student("Olli", "Ida Albergintie Street 1 00400 Helsinki");
-        System.out.println( olli );
-        olli.study();
-        System.out.println( olli );
+
+    @Override
+    public String toString() {
+        return super.getName() + "\n" + "  " + super.getAddress() + "\n" + "  credits " + this.credits;
     }
+
 }

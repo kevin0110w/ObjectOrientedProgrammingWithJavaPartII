@@ -16,24 +16,24 @@ import wormgame.game.WormGame;
  * @author woohoo
  */
 public class DrawingBoard extends JPanel implements Updatable {
-    private WormGame game;
+
     private int pieceLength;
-    
-    public DrawingBoard(WormGame game, int pieceLength) {
-        this.game = game;
+    private WormGame g;
+
+    public DrawingBoard(WormGame g, int pieceLength) {
+        this.g = g;
         this.pieceLength = pieceLength;
     }
-    
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.BLACK);
-        for (Piece piece : this.game.getWorm().getPieces()) {
-            g.fill3DRect(piece.getX()*this.pieceLength, piece.getY()*this.pieceLength, this.pieceLength, this.pieceLength, true);
+        for (Piece p : this.g.getWorm().getPieces()) {
+            g.fill3DRect(p.getX()*this.pieceLength, p.getY()*this.pieceLength, this.pieceLength, this.pieceLength, true);
         }
         g.setColor(Color.RED);
-        
-        g.fillOval(game.getApple().getX()*this.pieceLength, game.getApple().getY()*this.pieceLength, this.pieceLength, this.pieceLength);
+        g.fillOval(this.g.getApple().getX()*this.pieceLength, this.g.getApple().getY()*this.pieceLength, this.pieceLength, this.pieceLength);
     }
 
     @Override

@@ -13,11 +13,13 @@ public class DrawingBoard extends JPanel {
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
+        
         graphics.setColor(Color.BLACK);
         graphics.fillRect(100, 50, 50, 50);
+        graphics.fillRect(50, 200, 50, 50);
+        graphics.fillRect(100, 250, 200, 50);
         graphics.fillRect(250, 50, 50, 50);
-        graphics.fillRect(50,200, 50, 50);
-        graphics.fillRect(300,200, 50, 50);
-        graphics.fillRect(100,250, 200, 50);
+        graphics.fillRect(300, 200, 50, 50);
+        
     }
 }

@@ -21,71 +21,78 @@ import reference.domain.Rating;
  * @author woohoo
  */
 public class Reference {
-    private RatingRegister ratings;
-    
+
+    private RatingRegister ratingRegister;
+
     public Reference(RatingRegister ratings) {
-        this.ratings = ratings;
-    }
-    
-    public Film recommendFilm(Person person) {
-        // get all films and sort based on the average ratings. if the person hasn't seen any
-        // movies, return the best on average
-        Map<Film, List<Rating>> films = this.ratings.filmRatings();
-        List<Film> filmList = new ArrayList<Film> (films.keySet());
-        Collections.sort(filmList, new FilmComparator(films));
-        
-        if (this.ratings.getPersonalRatings(person).isEmpty()) {
-            return filmList.get(0);
-        }
-        
-        Map<Film, Rating> thisPersonsRating = this.ratings.getPersonalRatings(person);
-        Map<Person, Map<Film, Rating>> otherPersonsRating = new HashMap<Person, Map<Film, Rating>>();
-        List<Person> reviewers = this.ratings.reviewers();
-        
-        if (reviewers.isEmpty()) {
-            return null;
-        }
-        
-        // Work out the similarity scores
-        Map<Person, Integer> similarities = new HashMap<Person, Integer>();
-        int similarity = 0;
-        
-        for (Person p : reviewers) {
-                otherPersonsRating.put(p, this.ratings.getPersonalRatings(p));
-                if (thisPersonsRating.isEmpty()) {
-                    similarities.put(p, similarity);
-                } else {
-                for (Film f : thisPersonsRating.keySet()) {
-                    if (otherPersonsRating.get(p).containsKey(f)) {
-                    similarity = similarity + (thisPersonsRating.get(f).getValue() * otherPersonsRating.get(p).get(f).getValue());
-            }
-                similarities.put(p, similarity);
-        }
-                }
-            similarity = 0;
-    }
-        
-        // sort the reviewers list such that the most similiar is at the beginning of reviewers
-        Collections.sort(reviewers, new PersonComparator(similarities));
-        
-        Film recommendThis = null;
-        
-        // remove the person we're considering from the list of reviewers
-        reviewers.remove(person);
-        Map<Film, Rating> similarPersonsRating = this.ratings.getPersonalRatings(reviewers.get(0));
-        for (Film f : similarPersonsRating.keySet()) {     
-            if ((!thisPersonsRating.containsKey(f)) && (getNotDownvoted(f,  similarPersonsRating))) {
-                recommendThis = f;
-            }
-        }
-        return recommendThis;
+        this.ratingRegister = ratings;
     }
 
-    public boolean getNotDownvoted(Film m, Map<Film, Rating> otherPersonRatings) {
-        if (!(otherPersonRatings.containsKey(m))) {
-            return false;
-        } else {
-            return otherPersonRatings.get(m).getValue() > 1;
+    public Film recommendFilm(Person person) {
+        if (person == null) {
+            return null;
         }
+
+        Film recommendedFilm = null;
+
+        Map<Person, Integer> personComparatorRef = new HashMap<>();
+
+        Map<Film, List<Rating>> allFilmRatings = this.ratingRegister.filmRatings();
+
+        List<Film> allFilms = new ArrayList<>();
+        allFilms.addAll(allFilmRatings.keySet());
+
+        List<Person> reviewers = this.ratingRegister.reviewers();
+
+        Map<Person, Map<Film, Rating>> ratingsPerReviewer = new HashMap<Person, Map<Film, Rating>>();
+        ratingsPerReviewer = this.ratingRegister.getPersonalRatings();
+
+        Map<Film, Rating> theSpecificPersonsRatings = new HashMap<>();
+
+        if (!this.ratingRegister.reviewers().contains(person)) {
+            Collections.sort(allFilms, new FilmComparator(allFilmRatings));
+            return allFilms.get(0);
+        } else {
+            theSpecificPersonsRatings = ratingsPerReviewer.get(person);
+            personComparatorRef = getReviewersScore(person, ratingsPerReviewer);
+        }
+
+        reviewers.remove(person);
+        Collections.sort(reviewers, new PersonComparator(personComparatorRef));
+
+        for (Film f : ratingsPerReviewer.get(reviewers.get(0)).keySet()) {
+            if (ratingsPerReviewer.get(reviewers.get(0)).get(f).getValue() > 1) {
+                if (!theSpecificPersonsRatings.containsKey(f)) {
+                    recommendedFilm = f;
+                }
+            }
+
+        }
+        return recommendedFilm;
+    }
+
+    private Map<Person, Integer> getReviewersScore(Person person, Map<Person, Map<Film, Rating>> ratingsPerReviewer) {
+        int totalScore = 0;
+        Map<Film, Rating> thisPersonsRatings = new HashMap<>();
+        Map<Person, Integer> personRatingsComp = new HashMap<>();
+
+        if (ratingsPerReviewer.containsKey(person)) {
+            thisPersonsRatings = ratingsPerReviewer.get(person);
+        }
+
+        for (Person p : ratingsPerReviewer.keySet()) {
+            if (p.equals(person)) {
+                continue;
+            }
+
+            for (Film f : ratingsPerReviewer.get(p).keySet()) {
+                if (thisPersonsRatings.containsKey(f)) {
+                    totalScore += thisPersonsRatings.get(f).getValue() * ratingsPerReviewer.get(p).get(f).getValue();
+                }
+            }
+            personRatingsComp.put(p, totalScore);
+            totalScore = 0;
+        }
+        return personRatingsComp;
     }
 }

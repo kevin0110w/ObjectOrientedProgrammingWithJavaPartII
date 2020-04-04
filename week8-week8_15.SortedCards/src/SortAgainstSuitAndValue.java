@@ -1,22 +1,22 @@
 
 import java.util.Comparator;
 
-public class SortAgainstSuitAndValue implements Comparator <Card> {
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ *
+ * @author woohoo
+ */
+public class SortAgainstSuitAndValue implements Comparator<Card> {
 
     @Override
-    public int compare(Card card1, Card card2) {
-        if (card1.getSuit() == card2.getSuit()) { 
-            if (card1.getValue() - card2.getValue() < 0) {
-                return -1;
-            } else if (card1.getValue() - card2.getValue() >0) {
-                return 1;
-            } else {
-                return 0;
-            }
-        } else if (card1.getSuit() < card2.getSuit()) {
-            return -1;
-        } else {
-            return 1;
+    public int compare(Card o1, Card o2) {
+        if (o1.getSuit() == o2.getSuit()) {
+            return o1.getValue() - o2.getValue();
         }
+        return o1.getSuit() - o2.getSuit();
     }
 }

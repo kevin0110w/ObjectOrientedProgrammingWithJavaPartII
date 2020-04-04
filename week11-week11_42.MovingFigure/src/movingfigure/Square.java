@@ -9,19 +9,19 @@ import java.awt.Graphics;
 
 /**
  *
- * @author kevin0110w
+ * @author woohoo
  */
 public class Square extends Figure {
+
     private int sideLength;
 
     public Square(int x, int y, int sideLength) {
         super(x, y);
         this.sideLength = sideLength;
     }
-    
+
     @Override
     public void draw(Graphics graphics) {
-        graphics.fillRect(x, y, this.sideLength, this.sideLength);
+        graphics.fillRect(x, y, sideLength, sideLength);
     }
-    
 }

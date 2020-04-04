@@ -6,33 +6,41 @@
 package file;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Scanner;
+
 /**
  *
- * @author Freckles
+ * @author woohoo
  */
 public class Analysis {
+    private File file;
+    private int lines;
+    private int characters;
     private Scanner reader;
-    private ArrayList<String> lines;
     
     public Analysis(File file) throws Exception {
+        this.file = file;
+        this.lines = 0;
+        this.characters = 0;
         this.reader = new Scanner(file);
-        this.lines = new ArrayList<String>();
-        
-        while (this.reader.hasNextLine()) {
-            this.lines.add(this.reader.nextLine());
-        }
+        readFile();
     }
     
-    public int lines() {
-        return this.lines.size();
+    public int lines(){
+        return this.lines;
     }
-    public int characters() throws Exception {
-        int temp = 0;
-        for (String x : this.lines) {
-           temp += x.length() + 1;
-        }
-        return temp;
+    
+    public int characters() {
+        return this.characters;
+    }
+
+    private void readFile() {
+       while (this.reader.hasNext()) {
+           String line = this.reader.nextLine();
+           this.lines++;
+           for (int i = 0; i <= line.length(); i++) {
+               this.characters++;
+           }
+       }
     }
 }

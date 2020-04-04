@@ -7,12 +7,13 @@ package mooc.ui;
 
 /**
  *
- * @author Freckles
+ * @author woohoo
  */
-public class TextUserInterface implements UserInterface{
-    
-    
+public class TextUserInterface implements UserInterface {
+
+    @Override
     public void update() {
         System.out.println("Updating the user interface");
     }
+    
 }

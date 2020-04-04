@@ -1,37 +1,46 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package moving.domain;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Box implements Thing{
+/**
+ *
+ * @author woohoo
+ */
+public class Box implements Thing {
+
     private int maximumCapacity;
     private List<Thing> things;
-    
-    public Box(int maximumCapacity){
+
+    public Box(int maximumCapacity) {
         this.maximumCapacity = maximumCapacity;
         this.things = new ArrayList<Thing>();
     }
-    
-    public Box(Box aBox){
-        this.things = new ArrayList<Thing>();
-        this.maximumCapacity = aBox.maximumCapacity;
-    }
-    
-    public boolean addThing(Thing thing){
-        if((thing.getVolume() + this.getVolume()) <= this.maximumCapacity){
+
+    public boolean addThing(Thing thing) {
+        if (this.getVolume() + thing.getVolume() <= this.maximumCapacity) {
             this.things.add(thing);
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
-    
+
     @Override
-    public int getVolume(){
+    public int getVolume() {
         int vol = 0;
-        for(Thing x : this.things){
-            vol += x.getVolume();
+        for (Thing t : this.things) {
+            vol += t.getVolume();
         }
         return vol;
     }
     
+    public String toString() {
+        return "  things in the box: "+this.getVolume()+" dm^3";
+    }
 }

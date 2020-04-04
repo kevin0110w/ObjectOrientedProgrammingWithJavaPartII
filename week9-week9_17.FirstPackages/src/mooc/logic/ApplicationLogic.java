@@ -9,10 +9,11 @@ import mooc.ui.UserInterface;
 
 /**
  *
- * @author Freckles
+ * @author woohoo
  */
 public class ApplicationLogic {
-        private UserInterface ui;
+    private UserInterface ui;
+    
     public ApplicationLogic(UserInterface ui) {
         this.ui = ui;
     }

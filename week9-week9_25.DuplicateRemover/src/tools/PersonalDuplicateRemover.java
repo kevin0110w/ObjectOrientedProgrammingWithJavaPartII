@@ -7,63 +7,53 @@ package tools;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 /**
  *
- * @author Freckles
+ * @author woohoo
  */
 public class PersonalDuplicateRemover implements DuplicateRemover {
-    private Map<String, Integer> entries;
-    private int numberOfDuplicates;
-//    private Set<String> uniqueCharacterStrings;
+    private Map<String, Integer> characterStrings;
+    private Set<String> uniqueStrings;
     
-    public PersonalDuplicateRemover () {
-        this.entries = new HashMap<String, Integer>();
-//        this.uniqueCharacterStrings = new HashSet<String>();
+    public PersonalDuplicateRemover() {
+        this.characterStrings = new HashMap<String, Integer>();
+        this.uniqueStrings = new HashSet<String>();
     }
-            
-    //stores a characterString if it's not a duplicate.
+    
     @Override
     public void add(String characterString) {
-        int temp = 0;
-        if (!this.entries.containsKey(characterString)) {
-            this.entries.put(characterString, 0);
-        } else {
-            temp = this.entries.get(characterString) + 1;
-            this.entries.put(characterString, temp);
-        }     
+        this.uniqueStrings.add(characterString);
+        int numberOfThisString = 0;
+        if (this.characterStrings.containsKey(characterString)) {
+            numberOfThisString = this.characterStrings.get(characterString); 
+            numberOfThisString++;
+        }
+        this.characterStrings.put(characterString, numberOfThisString);
     }
 
-    //returns the number of detected duplicates.
     @Override
     public int getNumberOfDetectedDuplicates() {
-        int temp = 0;
-        for (int x: this.entries.values()) {
-            temp += x;
+        int totalDuplicates = 0;
+        for (String word : characterStrings.keySet()) {
+            System.out.println(word);
+            if (this.characterStrings.get(word) > 0) {
+                totalDuplicates += this.characterStrings.get(word);
+            }
         }
-        return temp;
+        return totalDuplicates;
     }
-    //returns an object which implements the interface Set<String>
+
     @Override
     public Set<String> getUniqueCharacterStrings() {
-        Set<String> uniqueSet = new HashSet<String>();
-        for (String x: this.entries.keySet()) {
-            uniqueSet.add(x);
-        }
-        return uniqueSet;
+        return this.uniqueStrings;
     }
-    
-    //removes stored characterStrings and resets the amount of detected duplicates.
+
     @Override
     public void empty() {
-        Set <String> keys = this.entries.keySet();
-        this.entries.clear();
-      for (String s: keys) {
-          if (this.entries.containsKey(s))
-         this.entries.remove(s);
-    }
+        this.uniqueStrings.clear();
+        this.characterStrings.clear();
     }
 }

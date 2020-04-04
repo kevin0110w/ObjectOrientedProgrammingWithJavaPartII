@@ -1,4 +1,7 @@
 
+import java.util.Objects;
+
+
 public class RegistrationPlate {
     // don't change the code which is already given to you
 
@@ -10,45 +13,40 @@ public class RegistrationPlate {
         this.regCode = regCode;
         this.country = country;
     }
-    
-    public String getCountry() {
-        return this.country;
-    }
-    
-    public String getRegCode() {
-        return this.regCode;
+
+    @Override
+    public int hashCode() {
+        if (this.regCode == null || this.country == null) {
+            return 7;
+        }
+        
+        return this.country.hashCode() + this.regCode.hashCode();
     }
 
     @Override
-    public String toString() {
-        return country + " " + regCode;
-    }
-    
-    @Override
-    public boolean equals(Object object) {
-        if (object == null) {
-            return false;
-        }
-        if (getClass() != object.getClass()) {
-            return false;
-        }
-        RegistrationPlate compared = (RegistrationPlate) object;
-        
-        if (this.country == null || !this.country.equals(compared.getCountry())) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
         
-        if (this.regCode == null || !this.regCode.equals(compared.getRegCode())) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final RegistrationPlate other = (RegistrationPlate) obj;
+        
+        if (!Objects.equals(this.regCode, other.regCode)) {
+            return false;
+        }
+        if (!Objects.equals(this.country, other.country)) {
             return false;
         }
         return true;
     }
 
+    
     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + (this.regCode != null ? this.regCode.hashCode() : 0);
-        hash = 37 * hash + (this.country != null ? this.country.hashCode() : 0);
-        return hash;
+    public String toString() {
+        return country + " " + regCode;
     }
+
 }

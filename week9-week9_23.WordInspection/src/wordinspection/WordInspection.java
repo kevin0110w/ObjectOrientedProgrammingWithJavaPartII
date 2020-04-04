@@ -7,102 +7,137 @@ package wordinspection;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
  *
- * @author Freckles
+ * @author woohoo
  */
 public class WordInspection {
+
+    private File file;
     private Scanner reader;
-    private ArrayList<String> lines;
-    private List<String> zList, lList, palindromeList, wordsWhichContainAllVowelsList;
-    
+    private int wordCount;
+    private List<String> wordsContainingZ;
+    private List<String> wordsEndingInL;
+    private List<String> palindromes;
+    private List<String> allVowels;
+    private List<String> allWords;
+
     public WordInspection(File file) throws Exception {
-        this.reader = new Scanner(file, "UTF-8");
-        this.lines = new ArrayList<String>();
-        this.zList = new ArrayList<String>();
-        this.lList = new ArrayList<String>();
-        this.palindromeList = new ArrayList<String>();
-        this.wordsWhichContainAllVowelsList = new ArrayList<String>();
-        read();
-        }
-    
-    public ArrayList<String> getLines() {
-        return this.lines;
+        this.file = file;
+        this.wordCount = 0;
+        this.reader = new Scanner(this.file, "UTF-8");
+        this.wordsContainingZ = new ArrayList<>();
+        this.wordsEndingInL = new ArrayList<>();
+        this.palindromes = new ArrayList<>();
+        this.allVowels = new ArrayList<>();
+        this.allWords = new ArrayList<>();
+        this.readFile();
     }
-    public void read() {
-        while (this.reader.hasNextLine()) {
-            String line = this.reader.nextLine();
-            this.lines.add(line);
-            if (line.indexOf('z') >= 0) {
-                zList.add(line);
-            }
-            if (line.endsWith("l")) {
-                lList.add(line);
-            }
-            if (isPalindrome(line)) {
-                this.palindromeList.add(line);
-            }
 
-            if (containsAllVowels(line)) {
-                this.wordsWhichContainAllVowelsList.add(line);
-            }
-        }
-    }
-    
     public int wordCount() {
-        System.out.println(this.lines.size());
-        return this.lines.size();
-        
+        return this.allWords.size();
     }
-    
+
     public List<String> wordsContainingZ() {
-        return this.zList;
+        return this.wordsContainingZ;
     }
-    
+
     public List<String> wordsEndingInL() {
-        return this.lList;
+        return this.wordsEndingInL;
     }
-    
+
     public List<String> palindromes() {
-        return this.palindromeList;
+        return this.palindromes;
     }
-    
-    public List<String>wordsWhichContainAllVowels() {
-        return this.wordsWhichContainAllVowelsList;
+
+    public List<String> wordsWhichContainAllVowels() {
+        return this.allVowels;
     }
-    
-    public boolean isPalindrome(String string) {
-        String reversed = "";
-        for (int i = string.length()-1; i >= 0; i--) {
-            reversed = reversed + string.charAt(i);
+
+    private void readFile() {
+        while (this.reader.hasNext()) {
+            String line = this.reader.nextLine();
+            allWords.add(line);
         }
-        if (string.equals(reversed)) {
-            return true;
-        } else {
-            return false;
+        checkWords();
+    }
+
+    private void checkWord(String word) {
+        checkWordContainsZ(word);
+        checkWordEndingInL(word);
+        checkWordIsPallindrome(word);
+        checkWordContainsAllVowels(word);
+    }
+
+    private void checkWordContainsZ(String word) {
+        if (!checkWordLengthGreaterThanZero(word)) {
+            return;
+        }
+        if (word.indexOf("z") >= 0 || word.indexOf("Z") >= 0) {
+            this.wordsContainingZ.add(word);
         }
     }
-    
-    public boolean containsAllVowels(String string) {
-        boolean check = false;
-        String vowels = "aeiouyäö";
-        for (int i = 0; i < vowels.length(); i++) {
-            for (int j = 0; j < string.length(); j++) {
-                if (vowels.charAt(i) == string.charAt(j)) {
-                    check = true;
-                    j = string.length();
-                } else { 
-                    check = false;
-                }
-            }
-            if (!check) {
-                break;
-            }
+
+    private void checkWordEndingInL(String word) {
+        if (!checkWordLengthGreaterThanZero(word)) {
+            return;
         }
 
-        return check;
+        String lastLetter = word.substring(word.length() - 1);
+
+        if (lastLetter.equals("l") || lastLetter.equals("L")) {
+            this.wordsEndingInL.add(word);
+        }
+    }
+
+    private void checkWordIsPallindrome(String word) {
+        if (!checkWordLengthGreaterThanZero(word)) {
+            return;
+        }
+
+        for (int i = 0; i < word.length() / 2; i++) {
+            if (!(word.charAt(i) == word.charAt(word.length() - (i + 1)))) {
+                return;
+            }
+        }
+        this.palindromes.add(word);
+    }
+
+    private void checkWordContainsAllVowels(String word) {
+        if (!checkWordLengthGreaterThanZero(word)) {
+            return;
+        }
+        Map<Character, Character> vowels = setUpVowelsDict();
+
+        for (Character character : vowels.keySet()) {
+            if (word.indexOf(character) < 0) {
+                return;
+            }
+        }
+        this.allVowels.add(word);
+    }
+
+    private boolean checkWordLengthGreaterThanZero(String word) {
+        return word.length() > 0;
+    }
+
+    private Map<Character, Character> setUpVowelsDict() {
+        String vowelsString = "aeiouyäö";
+        Map<Character, Character> vowelsDict = new HashMap<Character, Character>();
+        for (int i = 0; i < vowelsString.length(); i++) {
+            vowelsDict.put(vowelsString.charAt(i), vowelsString.charAt(i));
+        }
+        return vowelsDict;
+    }
+
+    private void checkWords() {
+        for (String w : this.allWords) {
+            checkWord(w);
+        }
     }
 }

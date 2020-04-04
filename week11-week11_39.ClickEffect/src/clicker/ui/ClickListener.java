@@ -12,21 +12,25 @@ import javax.swing.JLabel;
 
 /**
  *
- * @author Freckles
+ * @author woohoo
  */
-public class ClickListener implements ActionListener{
-    private Calculator calculator;
+public class ClickListener implements ActionListener {
+
+    private Calculator calc;
     private JLabel label;
-    
-    public ClickListener(Calculator aCalculator, JLabel label) {
-        this.calculator = aCalculator;
+
+    public ClickListener(Calculator calc, JLabel label) {
+        this.calc = calc;
         this.label = label;
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.calculator.increase();
-        this.label.setText(Integer.toString(this.calculator.giveValue()));
+        
+            this.calc.increase();
+            label.setText(Integer.toString(this.calc.giveValue()));
+        
+
     }
-    
+
 }

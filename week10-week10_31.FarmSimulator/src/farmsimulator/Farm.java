@@ -5,75 +5,88 @@
  */
 package farmsimulator;
 
-import java.util.Collection;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
- * @author Freckles
+ * @author woohoo
  */
 public class Farm implements Alive {
+
     private String owner;
     private Barn barn;
-    private Collection<Cow> cows; 
-    
-    public Farm(String name, Barn barn) {
-        this.owner = name;
+    private List<Cow> cows;
+
+    public Farm(String owner, Barn barn) {
+        this.owner = owner;
         this.barn = barn;
-        this.cows = new LinkedList<Cow>();
+        this.cows = new ArrayList<>();
+    }
+
+    public void manageCows() {
+        this.barn.takeCareOf(cows);
+    }
+
+    public String getFarmOwnerString() {
+        return this.owner + "\n";
+    }
+
+    public String getBarnInfoString() {
+        return "Barn bulk tank: " + this.barn + "\n";
+    }
+
+    public String getCowInfoString() {
+        String w = "";
+        if (this.cows.size() == 0) {
+            w += "No cows.";
+        } else {
+            w += "Animals:";
+            for (int i = 0; i < this.cows.size(); i++) {
+                if (i == this.cows.size() - 1) {
+                    w += "        " + this.cows.get(i);
+                } else {
+                    w += "        " + this.cows.get(i) + " ";
+                }
+            }
+        }
+        return w;
+    }
+
+    public void installMilkingRobot(MilkingRobot r) {
+        this.barn.installMilkingRobot(r);
     }
     
     @Override
-    public void liveHour() {
-        for (Cow cow:this.cows) {
-            cow.liveHour();
-        }
-    }
-    
-    public void manageCows() {
-        for (Cow cow : cows) {
-            this.barn.takeCareOf(cow);
-        }
-    }
-    
     public String toString() {
         String s = "";
-        s = s + "Farm owner: " + this.getOwner() + "\n";
-        s = "Barn bulk tank: " + this.barn.toString();
-        s = s + "\n";
-        
-        if (this.cows.size() > 0) {
-            s = s + "Animals: " + "\n";
-            for (Cow cow : this.cows) {
-                s = s + "\t" + cow.toString() + "\n";
-            }
-        } else {
-            s = s + "No cows.";
-        }
+        s += getFarmOwnerString();
+        s += getBarnInfoString();
+        s += getCowInfoString();
         return s;
     }
-    
+
+    public void addCow(Cow c ){
+        this.cows.add(c);
+    }
     public String getOwner() {
-        return this.owner;
+        return owner;
     }
-    
-    public void installMilkingRobot(MilkingRobot milkingRobot) {
-        this.barn.installMilkingRobot(milkingRobot);
-    }
-    
-    public void addCow(Cow cow) {
-        this.cows.add(cow);
-    }
-    
-    public static void main(String[] args) {
-        Farm farm = new Farm("Esko", new Barn(new BulkTank()));
 
-        farm.addCow(new Cow());
-        farm.addCow(new Cow());
-        farm.addCow(new Cow());
-
-        farm.liveHour();
-        farm.liveHour();
-        System.out.println(farm);
+    public Barn getBarn() {
+        return barn;
     }
+
+    public List<Cow> getCows() {
+        return cows;
+    }
+
+    @Override
+    public void liveHour() {
+        for (Cow c : cows) {
+            c.liveHour();
+        }
+
+    }
+
 }

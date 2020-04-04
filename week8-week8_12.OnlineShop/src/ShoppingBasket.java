@@ -2,33 +2,44 @@
 import java.util.HashMap;
 import java.util.Map;
 
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ *
+ * @author woohoo
+ */
 public class ShoppingBasket {
-    private Map<String, Purchase> shoppingBasket = new HashMap<String, Purchase>();
-    
+
+    private Map<String, Purchase> products;
+
     public ShoppingBasket() {
+        this.products = new HashMap<String, Purchase>();
     }
-    
+
     public void add(String product, int price) {
-        if (this.shoppingBasket.containsKey(product)) {
-            this.shoppingBasket.get(product).increaseAmount();
+        if (this.products.containsKey(product)) {
+            Purchase temp = this.products.get(product);
+            temp.increaseAmount();
+            this.products.put(product, temp);
         } else {
-        Purchase temp = new Purchase(product, 1, price);
-        this.shoppingBasket.put(product, temp);
+            this.products.put(product, new Purchase(product, 1, price));
         }
     }
-    
+
     public int price() {
         int price = 0;
-        for (Purchase x: this.shoppingBasket.values()) {
-            price += x.price();
+        for (Purchase p : this.products.values()) {
+            price += p.price();
         }
         return price;
     }
     
     public void print() {
-        for (Purchase x: this.shoppingBasket.values()) {
-            System.out.println(x);
+        for (Purchase p : this.products.values()) {
+            System.out.println(p);
         }
     }
- }
+}

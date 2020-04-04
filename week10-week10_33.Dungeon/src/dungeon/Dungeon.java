@@ -5,28 +5,27 @@
  */
 package dungeon;
 
-import java.util.Scanner;
-
 /**
  *
  * @author woohoo
  */
 public class Dungeon {
+
     private final int length;
     private final int height;
-    private final int vampires;
-    private final boolean vampiresMove;
-    private int moves;
-    private char[][] dungeon;
-    
-    
+    private final int numberOfVampires;
+    private final int numberOfMoves;
+    private final boolean canVampiresMove;
+    private final char[][] theDungeon;
+
     public Dungeon(int length, int height, int vampires, int moves, boolean vampiresMove) {
         this.length = length;
         this.height = height;
-        this.vampires = vampires;
-        this.moves = moves;
-        this.vampiresMove = vampiresMove;
-        this.dungeon = new char[this.height][this.length];
+        this.numberOfVampires = vampires;
+        this.numberOfMoves = moves;
+        this.canVampiresMove = vampiresMove;
+        this.theDungeon = new char[height][length];
+        setUpDungeon();
     }
 
     public int getLength() {
@@ -37,65 +36,63 @@ public class Dungeon {
         return height;
     }
 
-    public int getVampires() {
-        return vampires;
+    public int getNumberOfVampires() {
+        return numberOfVampires;
     }
 
-    public boolean isVampiresMove() {
-        return vampiresMove;
+    public int getNumberOfMoves() {
+        return numberOfMoves;
     }
 
-    public int getMoves() {
-        return moves;
+    public boolean CanVampiresMove() {
+        return canVampiresMove;
+    }
+
+    public char[][] getTheDungeon() {
+        return theDungeon;
     }
     
     public void run() {
-        this.setUpDungeon();
-        GameManager gm = new GameManager(this);
-        gm.run();
-    }
-    
-    public void setUpDungeon() {
-        for (int i = 0; i < this.dungeon.length; i++) {
-            for (int j = 0; j < this.dungeon[i].length; j++) {
-                this.dungeon[i][j] = '.';
-            }
-        }
+        Model m = new Model(this.numberOfMoves);
+        View v = new View();
+        Controller c = new Controller(m, v, this);
+        c.createCharacters(this.numberOfVampires);
+        c.start();
     }
 
-    public char[][] getDungeon() {
-        return dungeon;
-    }
-
-    public void setDungeon(char[][] dungeon) {
-        this.dungeon = dungeon;
-    }
-    
+    @Override
     public String toString() {
-        String dungeon = "";
-        for (int i = 0; i < this.dungeon.length; i++) {
-            for (int j = 0; j < this.dungeon[i].length; j++) {
-                dungeon += this.dungeon[i][j];
+        String s = "";
+        for (int i = 0; i < this.length; i++) {
+            for (int j = 0; j < this.height; j++) {
+                s += this.getTheDungeon()[i][j];
             }
-            dungeon += "\n";
+            s += "\n";
         }
-        dungeon += "\n";
-        return dungeon;
+        return s;
     }
 
-    public void setPosition(int vertical, int horizontal, char name) {
-        this.dungeon[vertical][horizontal] = name;
-    }
-    
-    public char getPosition(int vertical, int horizontal) {
-        return this.dungeon[vertical][horizontal];
-    }
-
-    void setMoves(int i) {
-        this.moves = i;
+    private void setUpDungeon() {
+        for (int i = 0; i < this.length; i++) {
+            for (int j = 0; j < this.height; j++) {
+                this.getTheDungeon()[i][j] = '.';
+            }
+        }
     }
 
-    void resetPosition(int y, int x) {
-        setPosition(y, x, '.');
+    public boolean spotOccupiedByVampire(Position position) {
+        return this.theDungeon[position.getY()][position.getX()] == 'v';
+    }
+
+    public boolean spotOccupiedByHuman(Position position) {
+        return this.theDungeon[position.getY()][position.getX()] == '@';
+    }
+
+    public void updateBoardWithNewPosition(Movable m) {
+        this.theDungeon[m.getCurrentPosition().getY()][m.getCurrentPosition().getX()] = m.getName().charAt(0);
+    }
+
+    public void resetPosition(Movable m) {
+        this.theDungeon[m.getCurrentPosition().getY()][m.getCurrentPosition().getX()] = '.';
     }
 }

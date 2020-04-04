@@ -7,11 +7,13 @@ package wormgame.domain;
 
 /**
  *
- * @author 
+ * @author woohoo
  */
 public class Apple extends Piece {
-    
+
     public Apple(int x, int y) {
-        super(x,y);
-    }    
+        super(x, y);
+    }
+    
+    
 }

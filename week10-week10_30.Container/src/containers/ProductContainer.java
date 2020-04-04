@@ -5,8 +5,11 @@
  */
 package containers;
 
+/**
+ *
+ * @author woohoo
+ */
 public class ProductContainer extends Container {
-
     private String productName;
 
     public ProductContainer(String productName, double capacity) {
@@ -15,14 +18,17 @@ public class ProductContainer extends Container {
     }
 
     public String getName() {
-        return this.productName;
+        return productName;
     }
 
-    public void setName(String newName) {
-        this.productName = newName;
+    public void setName(String productName) {
+        this.productName = productName;
     }
 
+    @Override
     public String toString() {
-        return getName() + ": " + super.toString();
+        return this.productName + ": " + super.toString();
     }
+    
+    
 }

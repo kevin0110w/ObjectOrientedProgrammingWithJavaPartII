@@ -5,100 +5,52 @@
  */
 package dungeon;
 
+import java.util.Scanner;
 /**
  *
  * @author woohoo
  */
-public class Human implements Character {
-    public final char name;
-    public int x;
-    public int y;
-    public int tempX;
-    public int tempY;
-    public int heightBoundary;
-    public int lengthBoundary;
-    
-    public Human(int heightBoundary, int lengthBoundary) {
-        this.name = '@';
-        this.x = 0;
-        this.y = 0;
-        this.tempX = this.x;
-        this.tempY = this.y;
-        this.heightBoundary = heightBoundary;
-        this.lengthBoundary = lengthBoundary;
-    }
-    
-    public int getTempX() {
-        return tempX;
-    }
-
-    public void setTempX(int tempX) {
-        this.tempX = tempX;
-    }
-
-    public int getTempY() {
-        return tempY;
-    }
-
-    public void setTempY(int tempY) {
-        this.tempY = tempY;
-    }
-    
-    @Override
-    public int getX() {
-        return this.x;
+public class Human extends Movable {
+    private Scanner scanner;
+    public Human(int widthMax, int heightMax, Scanner s) {
+        super(widthMax, heightMax, "@");
+        this.scanner = s;
     }
 
     @Override
-    public int getY() {
-        return this.y;
-    }
-    
-    public void setX(int newX){
-        this.x = newX;
-    }
-    
-    public void setY(int newY){
-        this.y = newY;
+    public void generateStartingPosition() {
+        this.setCurrentPosition(new Position(0, 0));
     }
 
-    public void generateNewCoordinates(char command) {
-        switch(command) {
-                // to go up
+    @Override
+    public void generateTemporaryPosition() {
+        int tempX = this.getCurrentPosition().getX();
+        int tempY = this.getCurrentPosition().getY();
+        String commands = this.scanner.nextLine();
+        for (int i = 0; i < commands.length(); i++) {
+            switch (commands.charAt(i)) {
                 case 'w':
-                    if (this.tempY > 0) {
-                        this.tempY = this.y-1;
+                    if (tempY > 0) {
+                        tempY--;
                     }
                     break;
-                // to go down
                 case 's':
-                    if (this.tempY < this.heightBoundary-1) {                        
-                        this.tempY = this.y+1;
+                    if (tempY < super.getHeightMax() - 1) {
+                        tempY++;
                     }
                     break;
-                // to go left
                 case 'a':
-                    if (this.tempX > 0) {
-                        this.tempX = this.x-1;
+                    if (tempX > 0) {
+                        tempX--;
                     }
                     break;
-                // to go right
                 case 'd':
-                    if (this.tempX < this.lengthBoundary-1) {
-                         this.tempX = this.x+1;
+                    if (tempX < super.getWidthMax() - 1) {
+                        tempX++;
                     }
-                    break;    
+                    break;
+            }
+            this.getTemporaryPositions().add(new Position(tempX, tempY));
         }
-          
-    }
-
-    @Override
-    public char getName() {
-        return this.name;
-    }
-    
-    @Override
-    public String toString() {
-        return this.name + " " + this.getX() + " " + this.getY();
     }
 }

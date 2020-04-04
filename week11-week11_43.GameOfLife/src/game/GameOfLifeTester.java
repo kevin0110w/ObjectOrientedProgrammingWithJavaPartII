@@ -9,12 +9,13 @@ public class GameOfLifeTester {
     private static final Scanner READER = new Scanner(System.in);
     private GameOfLifeBoard board;
 
-    public GameOfLifeTester(GameOfLifeBoard board) {
+
+    GameOfLifeTester(GameOfLifeBoard board) {
         this.board = board;
     }
 
     public void play() {
-//        draw();
+        draw();
         while (continueTurn()) {
             try {
                 board.playTurn();
@@ -37,7 +38,6 @@ public class GameOfLifeTester {
 
     private static void printCommands() {
         System.out.print("Press enter to continue, any other key quits: ");
-        
     }
 
     public void draw() {

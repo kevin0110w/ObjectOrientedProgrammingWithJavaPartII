@@ -1,53 +1,47 @@
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author woohoo
+ */
 public class Dictionary {
-    private HashMap<String, String> dictionary;
-//    private ArrayList<String> contents;
+    private Map<String,String> words;
     
     public Dictionary() {
-        this.dictionary = new HashMap<String, String>();
-//        this.contents = new ArrayList<String>();
+        this.words = new HashMap<String,String>();
     }
-    /*
-     returning the translation of its parameter. 
-    If the word is unknown, it returns null.
-    */
+    
     public String translate(String word) {
-        if (this.dictionary.containsKey(word)) {
-            return this.dictionary.get(word);
-        } else {
+        if (!this.words.containsKey(word)) {
             return null;
         }
+        
+        return this.words.get(word);
     }
-    /*
-    adding a new translation to the dictionary
-    */
+    
     public void add(String word, String translation) {
-        if (!(dictionary.containsKey(word))) {
-            this.dictionary.put(word, translation);
-        }
+        this.words.put(word, translation);
     }
     
-    /*
-     returns the amount of words in the dictionary
-    */
     public int amountOfWords() {
-        return this.dictionary.size();
+        return this.words.size();
     }
-    
+
     public ArrayList<String> translationList() {
-        ArrayList<String> translations = new ArrayList<String>();
-        int i = 0;
-        for (String key: this.dictionary.keySet()) {
-           translations.add(key);
-       }
-       
-       for (String values : this.dictionary.values()) {
-           translations.set(i, translations.get(i) + " = " + values);
-           i++;
-       }
-       return translations;
+        ArrayList<String> wordList = new ArrayList<String>();
+        for (String key : this.words.keySet()) {
+            wordList.add(key + " = " + this.words.get(key));
+        }
+        return wordList;
     }
 }

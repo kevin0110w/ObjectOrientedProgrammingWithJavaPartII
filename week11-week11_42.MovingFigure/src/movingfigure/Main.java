@@ -5,14 +5,7 @@ import javax.swing.SwingUtilities;
 public class Main {
 
     public static void main(String[] args) {
-        // test your program here
-//          UserInterface ui = new UserInterface(new Circle(50, 50, 250));
-//        SwingUtilities.invokeLater(ui);
-//        UserInterface ui = new UserInterface(new Square(50, 50, 250));
-//        SwingUtilities.invokeLater(ui);
-// UserInterface ui = new UserInterface(new Box(50, 50, 100, 300));
-//        SwingUtilities.invokeLater(ui);
- CompoundFigure truck = new CompoundFigure();
+        CompoundFigure truck = new CompoundFigure();
 
         truck.add(new Box(220, 110, 75, 100));
         truck.add(new Box(80, 120, 200, 100));

@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package dictionary;
 
 import java.io.File;
@@ -7,138 +12,90 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author kevin0110w
+ * @author woohoo
  */
 public class MindfulDictionary {
 
-    private String file;
-    private Map<String, String> translationToEnglish, translationToFinnish;
+    private Map<String, String> finnishToEnglish;
+    private Map<String, String> englishToFinnish;
+    private File file;
 
     public MindfulDictionary() {
-        this.translationToEnglish = new HashMap<String, String>();
-        this.translationToFinnish = new HashMap<String, String>();
+        finnishToEnglish = new HashMap<String, String>();
+        englishToFinnish = new HashMap<String, String>();
     }
 
     public MindfulDictionary(String file) {
-        this.translationToEnglish = new HashMap<String, String>();
-        this.translationToFinnish = new HashMap<String, String>();
-        this.file = file;
+        finnishToEnglish = new HashMap<String, String>();
+        englishToFinnish = new HashMap<String, String>();
+        this.file = new File(file);
     }
 
     public boolean load() {
-        File f = new File(this.file);
-        Scanner fileReader = null;
+        Scanner reader;
         try {
-            fileReader = new Scanner(f);
-            while (fileReader.hasNextLine()) {
-                String line = fileReader.nextLine();
-                String[] parts = line.split(":");
-                add(parts[0], parts[1]);
+            reader = new Scanner(this.file);
+            while (reader.hasNext()) {
+                String line = reader.nextLine();
+                String[] parts = line.split(":");   // the line is split at :
+                this.add(parts[0], parts[1]);
             }
-        } catch (FileNotFoundException g) {
+        } catch (FileNotFoundException ex) {
             return false;
         }
         return true;
     }
 
     public boolean save() {
-        File file = new File(this.file);
-        String line = "";
-        FileWriter out = null;
-        {
-            try {
-                out = new FileWriter(file);
-                for (String finnishWord : this.translationToFinnish.keySet()) {
-                    line = finnishWord + ":" + this.translationToFinnish.get(finnishWord) + "\n";
-                    out.write(line);
-                }
-            } catch (IOException e) {
-                return false;
-            } finally {
-                try {
-                    out.close();
-                } catch (IOException e) {
-                    return false;
-                }
+        FileWriter writer;
+        try {
+            writer = new FileWriter(this.file);
+            for (String s : this.finnishToEnglish.keySet()) {
+                String line = s + ":" + this.finnishToEnglish.get(s) + "\n";
+                writer.write(line);
             }
-            return true;
+            writer.close();
+        } catch (FileNotFoundException e) {
+            return false;
+        } catch (IOException ex) {
+            return false;
         }
+        return true;
     }
 
     public void add(String word, String translation) {
-        if (this.translationToEnglish.containsKey(translation) || this.translationToFinnish.containsKey(word)) {
-            return;
-        } else {
-            this.translationToEnglish.put(translation, word);
-            this.translationToFinnish.put(word, translation);
+        if (!this.finnishToEnglish.containsKey(word)) {
+            this.finnishToEnglish.put(word, translation);
+        }
+
+        if (!this.englishToFinnish.containsKey(translation)) {
+            this.englishToFinnish.put(translation, word);
         }
     }
 
     public String translate(String word) {
-        String line = "";
-        if (this.translationToEnglish.containsKey(word)) {
-            line = this.translationToEnglish.get(word);
-        } else if (this.translationToFinnish.containsKey(word)) {
-            line = this.translationToFinnish.get(word);
+        if (this.finnishToEnglish.containsKey(word)) {
+            return this.finnishToEnglish.get(word);
+        } else if (this.englishToFinnish.containsKey(word)) {
+            return this.englishToFinnish.get(word);
         } else {
-            line = null;
+            return null;
         }
-        return line;
     }
 
     public void remove(String word) {
-        if (this.translationToEnglish.containsKey(word)) {
-            this.translationToFinnish.remove(this.translationToEnglish.get(word));
-            this.translationToEnglish.remove(word);
-        } else if (this.translationToFinnish.containsKey(word)) {
-            this.translationToEnglish.remove(this.translationToFinnish.get(word));
-            this.translationToFinnish.remove(word);
+        if (this.finnishToEnglish.containsKey(word)) {
+            this.englishToFinnish.remove(this.finnishToEnglish.get(word));
+            this.finnishToEnglish.remove(word);
+        } else if (this.englishToFinnish.containsKey(word)) {
+            this.finnishToEnglish.remove(this.englishToFinnish.get(word));
+            this.englishToFinnish.remove(word);
         }
-    }
 
-    public static void main(String[] args) {
-//        MindfulDictionary dict = new MindfulDictionary();
-//        dict.add("apina", "monkey");
-//        dict.add("banaani", "banana");
-//        dict.add("apina", "apfe");
-//
-//        System.out.println(dict.translate("apina"));
-//        System.out.println(dict.translate("monkey"));
-//        System.out.println(dict.translate("programming"));
-//        System.out.println(dict.translate("banana"));
-
-//        MindfulDictionary dict = new MindfulDictionary();
-//        dict.add("apina", "monkey");
-//        dict.add("banaani", "banana");
-//        dict.add("ohjelmointi", "programming");
-//        dict.remove("apina");
-//        dict.remove("banana");
-//
-//        System.out.println(dict.translate("apina"));
-//        System.out.println(dict.translate("monkey"));
-//        System.out.println(dict.translate("banana"));
-//        System.out.println(dict.translate("banaani"));
-//        System.out.println(dict.translate("ohjelmointi"));
-//        MindfulDictionary dict = new MindfulDictionary("src/words.txt");
-//        dict.load();
-//
-//        System.out.println(dict.translate("apina"));
-//        System.out.println(dict.translate("ohjelmointi"));
-//        System.out.println(dict.translate("alla oleva"));
-//        MindfulDictionary dict = new MindfulDictionary("src/words.txt");
-//        dict.load();
-//
-//// using the dictionary
-//        dict.save();
-//MindfulDictionary s = new MindfulDictionary("test/tmp/tmp78346.txt");
-//s.add("tietokone", "computer");
-//s.save();
-        MindfulDictionary s = new MindfulDictionary("test/words.txt");
-        s.load();
-        s.translate("olut");
-        s.save();
     }
 }

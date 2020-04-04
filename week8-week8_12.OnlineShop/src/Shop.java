@@ -1,3 +1,13 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author woohoo
+ */
 import java.util.Scanner;
 
 public class Shop {
@@ -26,21 +36,20 @@ public class Shop {
             if (product.isEmpty()) {
                 break;
             }
-            
+
+            if (store.take(product)) {
+                basket.add(product, store.price(product));
+            };
             
             // here, you write the code to add a product to the shopping basket, if the storehouse is not empty
             // and decreases the storehouse stocks
             // do not touch the rest of the code!
-            if (store.stock(product) >0) {
-                store.take(product);
-                basket.add(product, store.price(product));
-            }
+
         }
 
         System.out.println("your purchases are:");
         basket.print();
         System.out.println("basket price: " + basket.price());
-        }
     }
-
+}
             

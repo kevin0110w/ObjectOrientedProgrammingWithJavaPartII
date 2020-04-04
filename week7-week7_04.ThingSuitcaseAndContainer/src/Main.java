@@ -2,6 +2,7 @@
 public class Main {
 
     public static void main(String[] args) {
+        // use this main class to test your program!
 //        Thing book = new Thing("Happiness in Three Steps", 2);
 //        Thing mobile = new Thing("Nokia 3210", 1);
 //
@@ -9,8 +10,7 @@ public class Main {
 //        System.out.println("Book weight: " + book.getWeight());
 //
 //        System.out.println("Book: " + book);
-//        System.out.println("Mobile: " + mobile);#
-
+//        System.out.println("Mobile: " + mobile);
 //        Thing book = new Thing("Happiness in three steps", 2);
 //        Thing mobile = new Thing("Nokia 3210", 1);
 //        Thing brick = new Thing("Brick", 4);
@@ -26,7 +26,6 @@ public class Main {
 //
 //        suitcase.addThing(brick);
 //        System.out.println(suitcase);
-        
 //        Thing book = new Thing("Happiness in Three Steps", 2);
 //        Thing mobile = new Thing("Nokia 3210", 1);
 //        Thing brick = new Thing("Brick", 4);
@@ -39,8 +38,7 @@ public class Main {
 //        System.out.println("Your suitcase contains the following things:");
 //        suitcase.printThings();
 //        System.out.println("Total weight: " + suitcase.totalWeight() + " kg");
-
-//        Thing book = new Thing("Happiness in Three Steps", 2);
+//    Thing book = new Thing("Happiness in Three Steps", 2);
 //        Thing mobile = new Thing("Nokia 3210", 1);
 //        Thing brick = new Thing("Brick", 4);
 //
@@ -51,7 +49,6 @@ public class Main {
 //
 //        Thing heaviest = suitcase.heaviestThing();
 //        System.out.println("The heaviest thing: " + heaviest);
-
 //        Thing book = new Thing("Happiness in Three Steps", 2);
 //        Thing mobile = new Thing("Nokia 3210", 1);
 //        Thing brick = new Thing("Brick", 4);
@@ -68,8 +65,7 @@ public class Main {
 //        container.addSuitcase(georgesCase);
 //
 //        System.out.println(container);
-//
-//        Thing book = new Thing("Happiness in Three Steps", 2);
+//Thing book = new Thing("Happiness in Three Steps", 2);
 //        Thing mobile = new Thing("Nokia 3210", 1);
 //        Thing brick = new Thing("Brick", 4);
 //
@@ -86,19 +82,20 @@ public class Main {
 //
 //        System.out.println("There are the following things in the container suitcases:");
 //        container.printThings();
-          Container container = new Container(1000);
-          addSuitcasesFullOfBricks(container);
-          System.out.println(container);
+        Container container = new Container(1000);
+        addSuitcasesFullOfBricks(container);
+        System.out.println(container);
     }
 
     public static void addSuitcasesFullOfBricks(Container container) {
-        Thing brick = new Thing("brick", 0);
-      
-        for (int i = 1; i <= 100; i++) {
-        brick = new Thing("brick", i);
-        Suitcase suitcase = new Suitcase(1000);
-        suitcase.addThing(brick);
-        container.addSuitcase(suitcase);
+        int counter = 1;
+        while (counter <= 100) {
+            Thing brick = new Thing("brick", counter);
+            Suitcase s = new Suitcase(100);
+            s.addThing(brick);
+            container.addSuitcase(s);
+            counter++;
         }
     }
+
 }

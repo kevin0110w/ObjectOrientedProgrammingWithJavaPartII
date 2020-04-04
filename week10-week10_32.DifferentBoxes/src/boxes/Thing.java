@@ -1,5 +1,7 @@
 package boxes;
 
+import java.util.Objects;
+
 public class Thing {
 
     private String name;
@@ -11,6 +13,7 @@ public class Thing {
         }
         this.name = name;
         this.weight = weight;
+
     }
 
     public Thing(String name) {
@@ -24,32 +27,31 @@ public class Thing {
     public int getWeight() {
         return weight;
     }
-   
+
     @Override
-    public boolean equals(Object other) {
-        if (other == null) {
-            return false;
-        }
-        
-        if (this.getClass() != other.getClass()) {
-            return false;
-        }
-        
-        Thing compared = (Thing) other;
-        
-        if (this.name.equals(compared.name) ){
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    @Override
-    public int hashCode(){
-        if(this.name == null){
-            return 7;
-}
-        return this.name.hashCode();
+    public int hashCode() {
+        int hash = 5;
+        hash = 37 * hash + Objects.hashCode(this.name);
+        return hash;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Thing other = (Thing) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        return true;
+    }
+
+    
 }

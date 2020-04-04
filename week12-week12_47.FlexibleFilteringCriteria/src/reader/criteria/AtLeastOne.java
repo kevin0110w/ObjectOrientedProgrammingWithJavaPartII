@@ -10,23 +10,31 @@ import java.util.List;
 
 /**
  *
- * @author 
+ * @author woohoo
  */
 public class AtLeastOne implements Criterion {
-    private Criterion[] criteria;
-    
-    public AtLeastOne(Criterion... criteria) {
-        this.criteria = criteria;
+
+    List<Criterion> object;
+
+    public AtLeastOne(Criterion... object) {
+        this.object = new ArrayList<>();
+        this.addObjects(object);
     }
-    
+
+    public void addObjects(Criterion... object) {
+        for (Criterion c : object) {
+            this.object.add(c);
+        }
+    }
+
     @Override
     public boolean complies(String line) {
-        for (int i = 0; i < this.criteria.length; i++) {
-            if (this.criteria[i].complies(line)) {
-                return this.criteria[i].complies(line);
+        for (Criterion c : this.object) {
+            if (c.complies(line)) {
+                return c.complies(line);
             }
         }
         return false;
     }
-    
+
 }

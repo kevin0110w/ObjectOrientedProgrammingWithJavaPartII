@@ -1,92 +1,81 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package application;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AverageSensor  implements Sensor {
-    private ArrayList<Sensor> averageSensor;
+/**
+ *
+ * @author woohoo
+ */
+public class AverageSensor implements Sensor {
+
+    private List<Sensor> sensors;
     private List<Integer> readings;
-    
+
     public AverageSensor() {
-        this.averageSensor = new ArrayList<Sensor>();
+        this.sensors = new ArrayList<Sensor>();
         this.readings = new ArrayList<Integer>();
     }
-    /*
-    Adds a new sensor to the average sensor
-    */
+
     public void addSensor(Sensor additional) {
-        this.averageSensor.add(additional);
+        this.sensors.add(additional);
     }
-    /*
-    Returns whether average sensor is on or off
-    The average sensor is on when all its sensors are on. 
-    
-    */
-    @Override
-    public boolean isOn() {
-        boolean check = true;
-        for (Sensor s : this.averageSensor) {
-            if (s.isOn() == false) {
-                check = false;
-                break;
-            }
-            check = true;
-        }
-        return check;
-    }
-    /*
-    When the average sensor is switched on, all its sensors have to be switched on    if they were not on already
-    */
-    @Override
-    public void on() {
-        for (Sensor s : this.averageSensor) {
-            if (s.isOn() == false) {
-                s.on();
-            }
-        }
-    }
-    /*
-    When the average sensor is closed, at least one of its sensors has to be switched off. It's also possible that all its sensors are switched off.
-    */
-    @Override
-    public void off() {
-       boolean check = false;
-       for (Sensor s:this.averageSensor) {
-           if (s.isOn() == false) { // keep going throught sensors, if one is off
-               break; // can exit
-           }
-           check = true; //have gone through list and not one sensor is off
-       }
-       if (check == true) {
-           this.averageSensor.get(0).off(); //turn the first sensor off
-       }
-    }
-    /*
-    The measure method of our AverageSensor returns the average of the readings of all its sensors (because the return value is int, the readings are rounded down as it is for integer division). If the measure method is called when the average sensor is off, or if the average sensor was not added any sensor, the method throws an IllegalStateException. 
-    */
-    @Override
-    public int measure() {
-        int reading = 0;
-        for (Sensor s: this.averageSensor) {
-            if (s.isOn()) {
-            reading += s.measure();
-            }
-        }
-        if (this.averageSensor.isEmpty() || this.isOn() == false) {
-            throw new IllegalStateException("Average Sensor is off or does not              have any sensors");
-        } else {
-        int averageReading = reading / this.averageSensor.size();
-        this.readings.add(averageReading);
-        return averageReading;  
-        }
-    }
-    
-    /*
-    returns a list of the reading results of all the measurements executed through      your AverageSensor
-    */
+
     public List<Integer> readings() {
         return this.readings;
     }
-}   
 
+    @Override
+    public boolean isOn() {
+        for (Sensor s : this.sensors) {
+            if (s.isOn() == false) {
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+    @Override
+    public void on() {
+        for (Sensor s : this.sensors) {
+            s.on();
+        }
+    }
+
+    @Override
+    public void off() {
+        for (Sensor sensor : this.sensors) {
+            if (sensor.isOn() == false) {
+                return;
+            }
+        }
+        this.sensors.get(0).off();
+    }
+
+    @Override
+    public int measure() {
+        if (this.sensors.size() == 0) {
+            throw new IllegalStateException();
+        }
+
+        if (this.isOn() == false) {
+            throw new IllegalStateException();
+        }
+
+        int sum = 0;
+        for (Sensor s : this.sensors) {
+            sum += s.measure();
+        }
+
+        int average = sum / this.sensors.size();
+        this.readings.add(average);
+        return average;
+    }
+
+}

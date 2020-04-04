@@ -7,7 +7,7 @@ package moving.domain;
 
 /**
  *
- * @author Freckles
+ * @author woohoo
  */
 public interface Thing {
     int getVolume();

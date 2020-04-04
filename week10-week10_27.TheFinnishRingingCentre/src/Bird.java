@@ -10,47 +10,41 @@ public class Bird {
         this.latinName = latinName;
         this.ringingYear = ringingYear;
     }
-    
-       @Override
-    public boolean equals(Object other) {
-        if (other == null) {
-            return false;
-        }
-        if (getClass() != other.getClass()) {
-            return false;
-        }
-        Bird compared = (Bird) other;
-        
-        if (this.latinName.equals(compared.latinName) && this.ringingYear == compared.ringingYear) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
-    
-   public int hashCode(){
-        if(this.latinName == null){
-            return 7;
-        }
-        
-        return this.ringingYear + this.latinName.hashCode();
-}
+
     @Override
     public String toString() {
         return this.latinName + " (" + this.ringingYear + ")";
     }
-    
-    public static void main(String[] args) {
-    Bird bird1 = new Bird("Rose Starling", "Sturnus roseus", 2012);
-    Bird bird2 = new Bird("Rose-Coloured Starling", "Sturnus roseus", 2012);
-    Bird bird3 = new Bird("Hooded Crow", "Corvus corone cornix", 2012);
-    Bird bird4 = new Bird("Rose-Coloured Pastor", "Sturnus roseus", 2000);
 
-    System.out.println( bird1.equals(bird2));   // same Latin name and same observation year: they are the same bird
-    System.out.println( bird1.equals(bird3));   // different Latin name: they are not the same bird
-    System.out.println( bird1.equals(bird4));   // different observation year: not the same bird
-    System.out.println( bird1.hashCode()==bird2.hashCode() );
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 43 * hash + (this.latinName != null ? this.latinName.hashCode() : 0);
+        hash = 43 * hash + this.ringingYear;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Bird other = (Bird) obj;
+        if (this.ringingYear != other.ringingYear) {
+            return false;
+        }
+        
+        if ((this.latinName == null) ? (other.latinName != null) : !this.latinName.equals(other.latinName)) {
+            return false;
+        }
+        return true;
     }
 }
 

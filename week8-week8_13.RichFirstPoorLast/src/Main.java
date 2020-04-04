@@ -20,7 +20,7 @@ public class Main {
         /*
          * When you have implemented the compareTo-method, remove comment below.
          */
-        Collections.sort(people);
+         Collections.sort(people);
         System.out.println(people);
 
     }

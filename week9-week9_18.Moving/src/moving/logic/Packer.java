@@ -12,33 +12,30 @@ import moving.domain.Thing;
 
 /**
  *
- * @author Freckles
+ * @author woohoo
  */
 public class Packer {
+
     private int boxesVolume;
-    private List<Box> boxes;
-    
+
     public Packer(int boxesVolume) {
         this.boxesVolume = boxesVolume;
-        this.boxes = new ArrayList<Box>();
     }
-    
-    public List<Box> packThings(List<Thing> thing) {
-       
-       Box box = new Box(this.boxesVolume);
-       if (thing.isEmpty() == false) {
-           this.boxes.add(box);
-       
-       for (Thing z: thing) {
-           if (box.addThing(z) == true) {
-               box.addThing(z);
-           } else {
-               Box newBox = new Box(box);
-               newBox.addThing(z);
-               this.boxes.add(newBox);
-           }
-       }
-     }
-       return this.boxes;
+
+    public List<Box> packThings(List<Thing> things) {
+        List<Box> boxes = new ArrayList<Box>();
+        Box b = new Box(this.boxesVolume);
+        for (Thing t : things) {
+            System.out.println(t);
+            if (b.addThing(t)) {
+                System.out.println("Added " + t.toString());
+            } else {
+                boxes.add(b);
+                b = new Box(this.boxesVolume);
+                b.addThing(t);
+            }
+        }
+        boxes.add(b);
+        return boxes;
     }
 }

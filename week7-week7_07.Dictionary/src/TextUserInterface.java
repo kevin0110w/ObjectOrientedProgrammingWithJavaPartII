@@ -1,61 +1,75 @@
-import java.util.*;
 
+import java.util.Scanner;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ *
+ * @author woohoo
+ */
 public class TextUserInterface {
-    private Scanner s;
+
+    private Scanner reader;
     private Dictionary dictionary;
-    
+
     public TextUserInterface(Scanner reader, Dictionary dictionary) {
-        this.s = reader;
+        this.reader = reader;
         this.dictionary = dictionary;
     }
-    
+
     public void start() {
-        String translation = "", finnish = "", translateword =  "";
-        System.out.println("Statement: ");
-        System.out.println("\t add - adds a word to the dictionary");
-        System.out.println("\t translate - asks a word and print its translation");
-        System.out.println("\t quit - quit the text user interface");
-        
-        System.out.println("Statement: ");
-        String command = s.nextLine();
-        while (!(command.equals("quit"))) {
-            if (command.equals("add")) {
-            System.out.println("In Finnish: ");
-            finnish = s.nextLine();
-            System.out.println("Translation: ");
-            translation = s.nextLine();
-            add(finnish, translation);
-        } else if (command.equals("translate")) {
-            System.out.println("Give a word: ");
-            finnish = s.nextLine();
-            System.out.println("Translation: ");
-            translateword = translate(finnish);
-            System.out.println(translateword);
-        } else {
-            System.out.println("Unknown Statement");
-            System.out.println("");
-            
-        }
-            System.out.println("Statement: ");
-            command = s.nextLine();
-            }
-        System.out.println("Cheers!");
-        }
-    
-    /*
-    add asks for a word pair from the user and adds them to the dictionary.
-    
-    */
-    public void add(String word, String translation) {
-        this.dictionary.add(word, translation);
-    }
-    
-    /*
-    asks a word from the user and it returns the translation.
-    */
-    public String translate(String word) {
-        return this.dictionary.translate(word);
-     
+        printSelection();
+        handleInput();
     }
 
+    public void add() {
+        System.out.print("In Finnish: ");
+        String word = this.reader.nextLine();
+        System.out.print("Translation: ");
+        String translation = this.reader.nextLine();
+        this.dictionary.add(word, translation);
+    }
+
+    public void translate() {
+        System.out.print("Give a word: ");
+        String word = this.reader.nextLine();
+        String translation = this.dictionary.translate(word);
+        System.out.print("Translation: " + translation);
+    }
+
+    private void printSelection() {
+        System.out.println("Statements:");
+        System.out.println("  add - adds a word pair to the dictionary");
+        System.out.println("  translate - asks a word and prints its translation");
+        System.out.println("  quit - quit the text user interface");
+        System.out.println("");
+    }
+
+    private void handleInput() {
+        String statement = "";
+        while (!(statement.equals("quit"))) {
+            System.out.print("Statement: ");
+            statement = this.reader.nextLine();
+            switch (statement.toLowerCase()) {
+                case "quit":
+                    System.out.println("Cheers!");
+                    break;
+                case "add":
+                    this.add();
+                    System.out.println("");
+                    break;
+                case "translate":
+                    this.translate();
+                    System.out.println("");
+                    break;
+                default:
+                    System.out.println("Unknown statement");
+                    System.out.println("");
+                    break;
+            }
+        }
+    }
 }

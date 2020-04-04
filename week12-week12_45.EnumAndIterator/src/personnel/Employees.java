@@ -11,45 +11,55 @@ import java.util.List;
 
 /**
  *
- * @author kevin0110w
+ * @author woohoo
  */
 public class Employees {
-    private List<Person> list;
-    
+
+    private List<Person> employees;
+
     public Employees() {
-        this.list = new ArrayList<Person>();
+        this.employees = new ArrayList<>();
     }
+
     public void add(Person person) {
-        this.list.add(person);
+        if (person == null) {
+            return;
+        }
+
+        this.employees.add(person);
     }
-    
+
     public void add(List<Person> persons) {
-        this.list.addAll(persons);
+        if (persons.isEmpty()) {
+            return;
+        }
+
+        this.employees.addAll(persons);
     }
-    
+
     public void print() {
-        Iterator it = this.list.iterator();
-        while (it.hasNext()) {
-            System.out.println(it.next());
+        Iterator<Person> personIterator = this.employees.iterator();
+        while (personIterator.hasNext()) {
+            System.out.println(personIterator.next());
         }
     }
     
     public void print(Education education) {
-     Iterator<Person> it = this.list.iterator();
-     while (it.hasNext()) {
-         Person p = it.next();
-         if (p.getEducation().equals(education)) {
-             System.out.println(p);
+        Iterator<Person> personIterator = this.employees.iterator();
+        while (personIterator.hasNext()) {
+            Person p = personIterator.next();
+            if (p.getEducation() == education) {
+                System.out.println(p);
             }
         }
     }
     
     public void fire(Education education) {
-        Iterator<Person> it = this.list.iterator();
-        while (it.hasNext()) {
-            Person p = it.next();
-            if (p.getEducation().equals(education)) {
-                it.remove();
+        Iterator<Person> personIterator = this.employees.iterator();
+        while (personIterator.hasNext()) {
+            Person p = personIterator.next();
+            if (p.getEducation() == education) {
+                personIterator.remove();
             }
         }
     }

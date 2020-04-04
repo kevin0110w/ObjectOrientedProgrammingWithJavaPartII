@@ -7,31 +7,23 @@ package clicker.applicationlogic;
 
 /**
  *
- * @author kevin0110w
+ * @author woohoo
  */
 public class PersonalCalculator implements Calculator {
+
     private int value;
-    
+
     public PersonalCalculator() {
         this.value = 0;
     }
+
     @Override
     public int giveValue() {
-       return this.value;
+        return this.value;
     }
 
     @Override
     public void increase() {
         this.value++;
     }
-    
-    public static void main(String[] args) {
-          Calculator calc = new PersonalCalculator();
-        System.out.println("Value: " + calc.giveValue());
-        calc.increase();
-        System.out.println("Value: " + calc.giveValue());
-        calc.increase();
-        System.out.println("Value: " + calc.giveValue());
-    }
-    
 }

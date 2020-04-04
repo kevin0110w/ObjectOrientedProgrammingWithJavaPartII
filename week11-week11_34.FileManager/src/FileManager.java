@@ -9,35 +9,31 @@ import java.util.Scanner;
 
 public class FileManager {
 
-    public ArrayList<String> read(String file) throws FileNotFoundException {
+    public List<String> read(String file) throws FileNotFoundException {
         File f = new File(file);
-        ArrayList<String> lines = new ArrayList<String>();
-        Scanner reader = new Scanner(f);
-        while (reader.hasNextLine()) {
-            String line = reader.nextLine();
+        Scanner s = new Scanner(f);
+        String line = "";
+        List<String> lines = new ArrayList<String>();
+        while (s.hasNext()) {
+            line = s.nextLine();
             lines.add(line);
         }
         return lines;
     }
 
     public void save(String file, String text) throws IOException {
-        FileWriter writer = new FileWriter(file);
+        File f = new File(file);
+        FileWriter writer = new FileWriter(f, true);
         writer.write(text);
         writer.close();
     }
 
     public void save(String file, List<String> texts) throws IOException {
-        FileWriter writer = new FileWriter(file);
-        for (String s : texts) {
-            writer.write(s+"\n");
+        File f = new File(file);
+        FileWriter writer = new FileWriter(f, true);
+        for (String line : texts) {
+            writer.write(line + "\n");
         }
         writer.close();
-    }
-        public static void main(String[] args) throws FileNotFoundException, IOException {
-        FileManager f = new FileManager();
-
-        for (String line : f.read("src/testinput1.txt")) {
-            System.out.println(line);
-        }
     }
 }

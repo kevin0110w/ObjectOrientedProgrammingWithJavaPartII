@@ -6,13 +6,18 @@
 package containers;
 
 import java.util.ArrayList;
+import java.util.List;
 
+/**
+ *
+ * @author woohoo
+ */
 public class ContainerHistory {
 
-    private ArrayList<Double> history;
+    private List<Double> history;
 
     public ContainerHistory() {
-        this.history = new ArrayList<Double>();
+        this.history = new ArrayList<>();
     }
 
     public void add(double situation) {
@@ -24,65 +29,75 @@ public class ContainerHistory {
     }
 
     public double maxValue() {
-        double temp = 0;
-        for (double number : this.history) {
-            if (number >= temp) {
-                temp = number;
+        if (this.history.size() == 0) {
+            return 0.0;
+        }
+
+        double max = this.history.get(0);
+        for (Double d : this.history) {
+            if (d > max) {
+                max = d;
             }
         }
-        return temp;
+        return max;
     }
 
     public double minValue() {
-        double temp = 0;
-        temp = this.history.get(0);
-        for (double number : this.history) {
-            if (number <= temp) {
-                temp = number;
+        if (this.history.size() == 0) {
+            return 0.0;
+        }
+        double min = this.history.get(0);
+        for (Double d : this.history) {
+            if (d < min) {
+                min = d;
             }
         }
-        return temp;
+        return min;
     }
 
     public double average() {
-        double temp = 0;
-        for (double number : this.history) {
-            temp += number;
+        if (this.history.size() == 0) {
+            return 0.0;
         }
-        temp /= this.history.size();
-        return temp;
+
+        double sum = 0.0;
+        for (Double d : this.history) {
+            sum += d;
+        }
+        double average = sum / this.history.size();
+        return average;
     }
 
     public double greatestFluctuation() {
         if (this.history.size() < 2) {
-            return 0;
+            return 0.0;
         }
-        double temp = 0;
-        double temp2 = 0;
+        double greatestFluctuation = 0.0;
         for (int i = 0; i < this.history.size() - 1; i++) {
-            temp = this.history.get(i) - this.history.get(i + 1);
+            double temp = this.history.get(i + 1) - this.history.get(i);
             if (temp < 0) {
                 temp *= -1;
             }
-            if (temp > temp2) {
-                temp2 = temp;
+
+            if (temp > greatestFluctuation) {
+                greatestFluctuation = temp;
             }
         }
-        return temp2;
+        return greatestFluctuation;
     }
 
     public double variance() {
         if (this.history.size() < 2) {
-            return 0;
+            return 0.0;
         }
-        double sum = 0;
+
         double average = this.average();
-        for (int i = 0; i < this.history.size(); i++) {
-            double x = ((this.history.get(i) - average) * (this.history.get(i) - average));
-            sum += x;
+        double variance = 0.0;
+        for (Double d : this.history) {
+            variance = variance + ((d - average) * (d - average));
         }
-        sum = sum / (this.history.size() - 1);
-        return sum;
+        variance = (variance / (this.history.size() - 1));
+        return variance;
     }
 
     public String toString() {

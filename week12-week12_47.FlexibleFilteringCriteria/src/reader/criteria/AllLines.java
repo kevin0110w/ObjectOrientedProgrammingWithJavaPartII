@@ -7,13 +7,13 @@ package reader.criteria;
 
 /**
  *
- * @author 
+ * @author woohoo
  */
 public class AllLines implements Criterion {
 
     public AllLines() {
-        
     }
+
     
     @Override
     public boolean complies(String line) {

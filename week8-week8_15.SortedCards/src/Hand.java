@@ -1,54 +1,56 @@
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-public class Hand implements Comparable<Hand>  {
-    private ArrayList<Card> hand;
-    
-    public Hand(){
+/**
+ *
+ * @author woohoo
+ */
+public class Hand implements Comparable<Hand> {
+    private List<Card> hand;
+
+    public Hand() {
         this.hand = new ArrayList<Card>();
     }
+    
+    
     public void add(Card card) {
         this.hand.add(card);
     }
     
     public void print() {
-        for (Card x: this.hand) {
-            System.out.println(x);
+        for (int i = 0; i < this.hand.size(); i++) {
+            System.out.println(this.hand.get(i));
         }
     }
     
     public void sort() {
-        
         Collections.sort(this.hand);
-        
-        }
+    }
 
     @Override
     public int compareTo(Hand o) {
-        int sum = 0;
-        for (Card x: this.hand) {
-            sum += x.getValue();
-        }
-        int osum = 0;
-        for (Card p : o.hand) {
-            osum += p.getValue();
+        int value = 0;
+        for (Card x : this.hand) {
+            value += x.getValue();
         }
         
-        if (sum - osum < 0) {
-            return -1;
-        } else if (sum - osum > 0) {
-            return 1;
-        } else {
-            return 0;
+        int otherValue = 0;
+        for (Card y : o.hand) {
+            otherValue += y.getValue();
         }
+        
+        return value - otherValue;
     }
     
     public void sortAgainstSuit() {
         Collections.sort(this.hand, new SortAgainstSuitAndValue());
     }
-    
-    
 }
-

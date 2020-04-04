@@ -6,26 +6,18 @@
 
 /**
  *
- * @author Freckles
+ * @author woohoo
  */
 public class Change {
-    protected char fromCharacter;
-    protected char toCharacter;
-    
+    private char fromCharacter;
+    private char toCharacter;
+
     public Change(char fromCharacter, char toCharacter) {
         this.fromCharacter = fromCharacter;
         this.toCharacter = toCharacter;
     }
     
     public String change(String characterString) {
-        String output = "";
-        for (int i = 0; i < characterString.length(); i++) {
-            if (this.fromCharacter == characterString.charAt(i)) {
-                output = output + toCharacter;
-            } else {
-                output = output + characterString.charAt(i);
-            }
-        }
-        return output;
+        return characterString.replace(this.fromCharacter, this.toCharacter);
     }
 }

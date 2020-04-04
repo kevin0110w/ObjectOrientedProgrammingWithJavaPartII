@@ -23,7 +23,13 @@ public class Person implements Comparable<Person> {
     }
 
     @Override
-    public int compareTo(Person o) {
-        return o.getSalary() - this.getSalary();
+    public int compareTo(Person p) {
+       if (this.salary > p.getSalary()) {
+           return -1;
+       } else if (this.salary < p.getSalary()) {
+           return 1;
+       } else {
+           return 0;
+       }
     }
 }

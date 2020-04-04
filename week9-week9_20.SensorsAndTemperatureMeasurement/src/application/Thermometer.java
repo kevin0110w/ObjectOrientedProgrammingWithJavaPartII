@@ -1,16 +1,25 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package application;
 
 import java.util.Random;
 
+/**
+ *
+ * @author woohoo
+ */
 public class Thermometer implements Sensor {
-    private Random random;
     private boolean isOn;
-    
-    public Thermometer(){
-    this.random = new Random();
-    this.isOn = false;
+    private Random rand;
+
+    public Thermometer() {
+        this.isOn = false;
+        this.rand = new Random();
     }
+    
     @Override
     public boolean isOn() {
         return this.isOn;
@@ -28,11 +37,11 @@ public class Thermometer implements Sensor {
 
     @Override
     public int measure() {
-        if (this.isOn == true) {
-            return this.random.nextInt(60) - 30;
-        } else {
-            throw new IllegalStateException("Must be on");
+        if (this.isOn == false) {
+            throw new IllegalStateException();
         }
+        int randomNo = this.rand.nextInt(61) - 30;
+        return randomNo;
     }
     
 }

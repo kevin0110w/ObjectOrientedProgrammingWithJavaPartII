@@ -7,7 +7,7 @@ package reader.criteria;
 
 /**
  *
- * @author
+ * @author woohoo
  */
 public class EndsWithQuestionOrExclamationMark implements Criterion {
 

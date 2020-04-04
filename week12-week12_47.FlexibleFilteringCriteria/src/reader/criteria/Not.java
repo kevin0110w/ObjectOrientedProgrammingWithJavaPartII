@@ -7,18 +7,19 @@ package reader.criteria;
 
 /**
  *
- * @author 
+ * @author woohoo
  */
 public class Not implements Criterion {
-    private Criterion c;
-    
-    public Not(Criterion c) {
-        this.c = c;
+    private Criterion o1;
+
+    public Not(Criterion o1) {
+        this.o1 = o1;
     }
-    
+
     @Override
     public boolean complies(String line) {
-        return (!c.complies(line));
+        return (!this.o1.complies(line));
     }
+    
     
 }

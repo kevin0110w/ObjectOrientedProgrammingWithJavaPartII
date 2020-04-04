@@ -1,81 +1,76 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package dungeon;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 /**
  *
  * @author woohoo
  */
-public class Vampire implements Character{
-    public final char name;
-    public int x, y, heightBoundary, lengthBoundary, tempX, tempY;
-    public Random randomX, randomY;
-    public boolean vampiresMove;
+public class Vampire extends Movable {
+    private Random randomGenerator;
+    private int tempY;
+    private int tempX;
     
-    public Vampire(int heightBoundary, int lengthBoundary, boolean vampiresMove) {
-        this.name = 'v';
-        this.heightBoundary = heightBoundary;
-        this.lengthBoundary = lengthBoundary;
-        this.randomY = new Random();
-        this.randomX = new Random();
-        this.vampiresMove = vampiresMove;
-        this.startingPositions();
-    }
-
-    public int getTempX() {
-        return tempX;
-    }
-
-    public int getTempY() {
-        return tempY;
-    }
-    
-    @Override
-    public int getX() {
-        return this.x;
+    public Vampire(int widthMax, int heightMax) {
+        super(widthMax, heightMax, "v");
+        this.randomGenerator = new Random();
     }
 
     @Override
-    public int getY() {
-        return this.y;
+    public void generateStartingPosition() {
+        int x = getRandomXPosition();
+        int y = getRandomYPosition();
+        this.setCurrentPosition(new Position(x, y));
+    }
+    
+    private int getRandomXPosition() {
+        return this.randomGenerator.nextInt(super.getWidthMax());
     }
 
-    public void generateNewCoordinates() {
-        if (this.vampiresMove) {
-            tempX = this.randomX.nextInt(this.lengthBoundary);
-            tempY = this.randomY.nextInt(this.heightBoundary);
+    private int getRandomYPosition() {
+        return this.randomGenerator.nextInt(super.getHeightMax());
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
         }
-    }
-    
-    public void move(boolean canMove) {
-        if (canMove) {
-        this.x = this.tempX;
-        this.y = this.tempY;
+        if (obj == null) {
+            return false;
         }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Vampire other = (Vampire) obj;
+        if (!Objects.equals(this.getName(), other.getName())) {
+            return false;
+        }
+        if (!Objects.equals(this.getCurrentPosition(), other.getCurrentPosition())) {
+            return false;
+        }
+        return true;
     }
-    
 
     @Override
-    public char getName() {
-        return this.name;
-        
-    }
-    
-    @Override
-    public String toString() {
-         return this.name + " " + this.x + " " + this.y;
-    }
-
-    private void startingPositions() {
-        while (true) {
-            this.x = this.randomX.nextInt(this.lengthBoundary);
-            this.tempX = this.x;
-            this.y = this.randomY.nextInt(this.heightBoundary);
-            this.tempY = this.y;
-            if (!(this.x == 0 && this.y == 0)) {
-                return;
-            }
-        }
-        
+    public void generateTemporaryPosition() {
+        int x = getRandomXPosition();
+        int y = getRandomYPosition();
+        Position newTemporaryPosition = new Position(x, y);
+        this.getTemporaryPositions().add(newTemporaryPosition);
     }
 }

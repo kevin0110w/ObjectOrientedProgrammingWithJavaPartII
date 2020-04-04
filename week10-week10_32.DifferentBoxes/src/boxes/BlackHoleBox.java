@@ -5,24 +5,23 @@
  */
 package boxes;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ *
+ * @author woohoo
+ */
 public class BlackHoleBox extends Box {
-    private List<Thing> blackHoleBox;
-    public BlackHoleBox() {
-        this.blackHoleBox = new ArrayList<Thing>();
-    }
     
+    public BlackHoleBox() {
+        
+    }
     @Override
     public void add(Thing thing) {
-        this.blackHoleBox.add(thing);
+       
     }
 
     @Override
     public boolean isInTheBox(Thing thing) {
         return false;
     }
-    
     
 }

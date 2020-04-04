@@ -7,20 +7,19 @@ package reader.criteria;
 
 /**
  *
- * @author 
+ * @author woohoo
  */
 public class Both implements Criterion {
-    private Criterion c;
-    private Criterion c1;
-    
-    public Both(Criterion c, Criterion c1) {
-        this.c = c;
-        this.c1 = c1;
+    private Criterion o1;
+    private Criterion o2;
+
+    public Both(Criterion o1, Criterion o2) {
+        this.o1 = o1;
+        this.o2 = o2;
     }
-    
+
     @Override
     public boolean complies(String line) {
-        return c.complies(line) && c1.complies(line);
+        return o1.complies(line) && o2.complies(line);
     }
-    
 }

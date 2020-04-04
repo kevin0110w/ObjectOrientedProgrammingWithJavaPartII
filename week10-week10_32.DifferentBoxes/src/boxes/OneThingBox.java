@@ -5,38 +5,30 @@
  */
 package boxes;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
+/**
+ *
+ * @author woohoo
+ */
 public class OneThingBox extends Box {
-    private List<Thing> oneThingBox;
-    
+
+    private Thing[] thing;
+
     public OneThingBox() {
-        this.oneThingBox = new ArrayList<Thing>();
+        this.thing = new Thing[1];
     }
 
     @Override
     public void add(Thing thing) {
-        if (this.oneThingBox.isEmpty()) {
-            this.oneThingBox.add(thing);
+        if (this.thing[0] == null) {
+            this.thing[0] = thing;
         }
     }
 
     @Override
     public boolean isInTheBox(Thing thing) {
-        if (this.oneThingBox.contains(thing)) {
-            return true;
-        } else {
+        if (this.thing[0] == null) {
             return false;
         }
-    }
-    public static void main(String[] args) {
-         OneThingBox box = new OneThingBox();
-        box.add(new Thing("Saludo", 5));
-        box.add(new Thing("Pirkka", 5));
-
-        System.out.println(box.isInTheBox(new Thing("Saludo")));
-        System.out.println(box.isInTheBox(new Thing("Pirkka")));
+        return this.thing[0].equals(thing);
     }
 }

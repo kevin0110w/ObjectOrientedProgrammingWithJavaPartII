@@ -1,32 +1,34 @@
+
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
- * @author Freckles
+ * @author woohoo
  */
-import java.util.Scanner;
-
 public class Calculator {
+
     private Reader reader;
-    private int count;
-    private int[] values;
+    private int calculationsPerformed;
+
     public Calculator() {
         this.reader = new Reader();
-        this.count = 0;
-        this.values = new int[2];
+        this.calculationsPerformed = 0;
     }
+
     public void start() {
         while (true) {
-            System.out.println("command: ");
+            System.out.print("command: ");
             String command = reader.readString();
             if (command.equals("end")) {
                 break;
             }
-            
+
             if (command.equals("sum")) {
                 sum();
             } else if (command.equals("difference")) {
@@ -35,53 +37,43 @@ public class Calculator {
                 product();
             }
         }
+
         statistics();
     }
-    
+
     private void sum() {
-//        System.out.println("value1: ");
-//        int value1 = reader.readInteger();
-//        System.out.println("value2: ");
-//        int value2 = reader.readInteger();
-        numbers();
-//        System.out.println("sum of the values: " + (value1 + value2));
-        System.out.println("sum of the values: " + (this.values[0] + this.values[1]));
-        this.count++;
+        List<Integer> values = readValues();
+        // print the value according to the example above
+        System.out.println("sum of the values " + (values.get(0) + values.get(1)));
+        calculationsPerformed++;
     }
-    
+
     private void difference() {
-//        System.out.println("value1: ");
-//        int value1 = reader.readInteger();
-//        System.out.println("value2: ");
-//        int value2 = reader.readInteger();
-    numbers();
-//        System.out.println("difference of the values: " + (value1 - value2));
-System.out.println("sum of the values: " + (this.values[0] - this.values[1]));
-        this.count++;
+        List<Integer> values = readValues();
+        // print the value according to the example above
+        System.out.println("difference of the values " + (values.get(0) - values.get(1)));
+        calculationsPerformed++;
     }
-    
+
     private void product() {
-//        System.out.println("value1: ");
-//        int value1 = reader.readInteger();
-//        System.out.println("value2: ");
-//        int value2 = reader.readInteger();
-//        System.out.println("product of the values: " + (value1 * value2));
-numbers();
-System.out.println("sum of the values: " + (this.values[0] * this.values[1]));
-        this.count++;
+        List<Integer> values = readValues();
+        // print the value according to the example above
+        System.out.println("product of the values" + (values.get(0) * values.get(1)));
+        calculationsPerformed++;
     }
-    
+
     private void statistics() {
-        System.out.println("Calculations done: " + this.count);
+        System.out.println("Calculations done " + calculationsPerformed);
     }
-    
-    private int[] numbers() {
-        System.out.println("value1: ");
-        int value1 = reader.readInteger();
-        this.values[0] = value1;
-        System.out.println("value2: ");
-        int value2 = reader.readInteger();
-        this.values[1] = value2;
-        return this.values;
+
+    private List<Integer> readValues() {
+        List<Integer> values = new ArrayList<Integer>();
+        System.out.print("value1: ");
+        int value1 = this.reader.readInteger();
+        values.add(value1);
+        System.out.print("value2: ");
+        int value2 = this.reader.readInteger();
+        values.add(value2);
+        return values;
     }
 }

@@ -6,16 +6,16 @@
 package movingfigure;
 
 import java.awt.Graphics;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
- * @author kevin0110w
+ * @author woohoo
  */
-public class CompoundFigure extends Figure{
+public class CompoundFigure extends Figure {
     private List<Figure> figures;
-    
+
     public CompoundFigure() {
         super(0,0);
         this.figures = new ArrayList<Figure>();
@@ -26,16 +26,19 @@ public class CompoundFigure extends Figure{
     }
     
     @Override
+    public void move(int dx, int dy) {
+        for (Figure f : this.figures) {
+            f.move(dx, dy);
+        }
+    }
+
+    @Override
     public void draw(Graphics graphics) {
-        for (Figure figure : this.figures) {
-            figure.draw(graphics);
+        for (Figure f : this.figures) {
+            f.draw(graphics);
         }
     }
     
-    @Override
-    public void move(int x, int y) {
-        for (Figure figure : this.figures) {
-            figure.move(x,y);
-        }
-    }
+    
+    
 }

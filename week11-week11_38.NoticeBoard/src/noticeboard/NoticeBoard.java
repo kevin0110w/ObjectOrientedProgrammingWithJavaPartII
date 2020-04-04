@@ -11,10 +11,13 @@ public class NoticeBoard implements Runnable {
 
     @Override
     public void run() {
-        frame = new JFrame("");
-        frame.setPreferredSize(new Dimension(400, 200));
+        frame = new JFrame();
+        frame.setPreferredSize(new Dimension(500, 500));
+
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         createComponents(frame.getContentPane());
+
         frame.pack();
         frame.setVisible(true);
     }
@@ -22,19 +25,18 @@ public class NoticeBoard implements Runnable {
     private void createComponents(Container container) {
         GridLayout layout = new GridLayout(3,1);
         container.setLayout(layout);
-        JTextField text = new JTextField();
-        JButton copy = new JButton("Copy!");
+        JButton button = new JButton("Copy!");
         JLabel label = new JLabel();
-        
-        Copier copier = new Copier(text, label);
-        
-        copy.addActionListener(copier);
-        container.add(text);
-        container.add(copy);
+        JTextField textField = new JTextField();
+        button.setActionCommand("Button");
+        container.add(textField);
+        container.add(button);
         container.add(label);
+        ActionEventListener list = new ActionEventListener(textField, label);
+        button.addActionListener(list);
+        
+        
     }
     
-    public JFrame getFrame() {
-        return frame;
-    }
+    
 }

@@ -1,69 +1,84 @@
 
 import java.util.ArrayList;
+import java.util.List;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author woohoo
+ */
 public class Suitcase {
-    private ArrayList<Thing> suitcase;
-    private int maxWeight;
-//    private int count;
-//    private int weight;
-    
-    public Suitcase(int maxWeight) {
-        this.suitcase = new ArrayList<Thing>();
-        this.maxWeight = maxWeight;
-//        this.count = 0;
-//        this.weight = 0;
-    }
-    
-    public void addThing(Thing thing) {
-        if ((this.totalWeight() + thing.getWeight()) <= this.maxWeight) {
-            this.suitcase.add(thing);
-//            this.weight += thing.getWeight();
-//            this.count++;
-        }
-    }
-    
-    public String toString() {
-        String output = "";
-//        if (this.count == 0) {
-           if (this.suitcase.size() == 0) {
-            output += "empty (" + this.totalWeight() + " kg)";
-//        } else if (this.count == 1) {
-        } else if (this.suitcase.size() == 1) {
-            output += "1 thing (" + this.totalWeight() + " kg)";
-        } else {
-            output += this.suitcase.size() + " things (" + this.totalWeight() + " kg)";
-        }
-        return output;
+    private List<Thing> things;
+    private int limit;
+
+    public Suitcase(int limit) {
+        this.limit = limit;
+        this.things = new ArrayList<Thing>();
     }
 
+    public void addThing(Thing thing) {
+        if (this.totalWeight() + thing.getWeight() > this.limit) {
+            
+        } else {
+            this.things.add(thing);
+        }
+    }
+    
+    public String getSize() {
+        int size = this.things.size();
+        if (size == 0) {
+            return "empty";
+        } else if (size == 1) {
+            return this.things.size() + " thing";
+        } else {
+            return this.things.size() + " things";
+        }
+    }
     
     public void printThings() {
-        for (Thing thing : this.suitcase) {
-            System.out.println(thing);
+        for (Thing t : this.things) {
+            System.out.println(t);
         }
     }
     
     public int totalWeight() {
-        int weight = 0;
-        for (Thing things : this.suitcase) {
-            weight += things.getWeight();
+        int currentWeight = 0;
+        for (Thing t : this.things) {
+            currentWeight += t.getWeight();
         }
-        return weight;
-    }   
+        return currentWeight;
+    }
     
     public Thing heaviestThing() {
-        if (this.suitcase.size() == 0) {
+        if (this.things.size() == 0) {
             return null;
-        }
+        } 
         
-        Thing thing = this.suitcase.get(0);
-        int heaviest = this.suitcase.get(0).getWeight();
-        for (Thing a : this.suitcase) {
-            if (a.getWeight() >= heaviest) {
-                heaviest = a.getWeight();
-                thing = a;
-            } 
+        Thing heaviest = this.things.get(0);
+        for (Thing t : this.things) {
+            if (t.getWeight() > heaviest.getWeight()) {
+                heaviest = t;
+            }
         }
-        return thing;
+        return heaviest;
+        
     }
+    
+    @Override
+    public String toString() {
+        return this.getSize() + " (" + this.totalWeight() + " kg)";
+    }
+
+    Iterable<Thing> getThings() {
+        return this.things;
+    }
+    
+    
+    
+    
 }

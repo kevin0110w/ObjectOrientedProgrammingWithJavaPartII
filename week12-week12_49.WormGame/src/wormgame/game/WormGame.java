@@ -6,34 +6,35 @@ import java.util.Random;
 import javax.swing.Timer;
 import wormgame.Direction;
 import wormgame.domain.Apple;
-import wormgame.domain.Worm;
 import wormgame.domain.Piece;
+import wormgame.domain.Worm;
 import wormgame.gui.Updatable;
 
 public class WormGame extends Timer implements ActionListener {
-    private Worm worm;
+
+    private Random rand;
     private int width;
     private int height;
     private boolean continues;
     private Updatable updatable;
+    private Worm worm;
     private Apple apple;
-    private Random rand;
-            
+
     public WormGame(int width, int height) {
         super(1000, null);
         this.rand = new Random();
         this.width = width;
         this.height = height;
-        this.worm = new Worm(this.width / 2, this.height / 2, Direction.DOWN);
-        this.continues = true;       
-        
+        this.continues = true;
+        this.worm = new Worm(width / 2, height / 2, Direction.DOWN);
         createApple();
         addActionListener(this);
         setInitialDelay(2000);
 
+
     }
     
-    public int randomX() {
+        public int randomX() {
         int randx = rand.nextInt(this.width);
         return randx;
     }
@@ -42,40 +43,6 @@ public class WormGame extends Timer implements ActionListener {
         int randy = rand.nextInt(this.height);
         return randy;
     }
-    /**
-     * returns the WormGame worm.
-     * @return 
-     */
-    public Worm getWorm() {
-        return this.worm;
-    }
-    
-    /**
-     * sets on the game the method parameter worm. 
-     * If the method getWorm is called after the worm has been set up, 
-     * it has to return a reference to the same worm.
-     * @param worm 
-     */
-    public void setWorm(Worm worm) {
-        this.worm = worm;
-   }
-    
-    /**
-     *  returns the apple of the WormGame.
-     */
-    public Apple getApple() {
-        return this.apple;
-    }
-    
-    /**
-     * sets the method parameter apple on the worm game. 
-     * If the method getApple is called after the apple has been set up, it has to return a reference to the same apple.
-     * @param apple 
-     */
-    public void setApple(Apple apple) {
-        this.apple = apple;
-    }
-
 
     public boolean continues() {
         return continues;
@@ -95,14 +62,13 @@ public class WormGame extends Timer implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        
         if (continues) {
             this.worm.move();
             if (bumpsIntoTopBorder() || bumpsIntoLeftBorder() || bumpsIntoRightBorder() || bumpsIntoBottomBorder()) {
                 this.continues = false;
-                System.out.println(this.continues);
                 return;
             }
+            
             if (this.worm.runsInto(this.apple)) {
                 this.worm.grow();
                 createApple();
@@ -123,8 +89,24 @@ public class WormGame extends Timer implements ActionListener {
             }
         }
     }
+    
+    public Worm getWorm() {
+        return this.worm;
+    }
 
-    private boolean bumpsIntoTopBorder() {
+    public void setWorm(Worm worm) {
+        this.worm = worm;
+    }
+
+    public Apple getApple() {
+        return this.apple;
+    }
+
+    public void setApple(Apple apple) {
+        this.apple = apple;
+    }
+
+        private boolean bumpsIntoTopBorder() {
         for (int i = 0; i < width; i++) {
             Piece p = new Piece(i, 0);
             if (this.worm.runsInto(p)) {
@@ -163,5 +145,4 @@ public class WormGame extends Timer implements ActionListener {
         }
         return false;
     }
-
 }

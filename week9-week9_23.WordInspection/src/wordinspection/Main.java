@@ -9,13 +9,23 @@ public class Main {
 
         File file = new File("src/shortList.txt");
         // all words are in file src/wordList.txt
-        WordInspection s = new WordInspection(file);
-        System.out.println(s.wordCount());// expected:<24> but was:<20>  
-        int i = 0;
-        for (String d : s.getLines()) {
-            System.out.println(d);
-            i++;
+        WordInspection w = new WordInspection(file);
+        for (String x : w.wordsContainingZ()) {
+            System.out.println(x);
+        }
+//        System.out.println(w.wordCount());
+//        System.out.println(w.wordsContainingZ().size());
+        
+//        for (String s : w.wordsContainingZ()) {
+//            System.out.println(s);
+//        }
+//        
+//        for (String s : w.wordsEndingInL()) {
+//            System.out.println(s);
+//        }
+
+//        for (String s : w.wordsWhichContainAllVowels()) {
+//            System.out.println(s);
+//        }
     }
-        System.out.println(i);
-}
 }

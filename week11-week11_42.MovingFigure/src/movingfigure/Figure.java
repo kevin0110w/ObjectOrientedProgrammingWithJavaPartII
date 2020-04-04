@@ -9,9 +9,10 @@ import java.awt.Graphics;
 
 /**
  *
- * @author kevin0110w
+ * @author woohoo
  */
 public abstract class Figure {
+
     protected int x;
     protected int y;
     
@@ -19,16 +20,16 @@ public abstract class Figure {
         this.x = x;
         this.y = y;
     }
-    
+
     public void move(int dx, int dy) {
         this.x += dx;
         this.y += dy;
     }
-    
+
     public int getX() {
         return this.x;
     }
-    
+
     public int getY() {
         return this.y;
     }

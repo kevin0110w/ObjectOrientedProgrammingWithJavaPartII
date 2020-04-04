@@ -11,38 +11,39 @@ public class UserInterface implements Runnable {
     @Override
     public void run() {
         frame = new JFrame("Survey");
-        frame.setPreferredSize(new Dimension(200, 300));
+        frame.setPreferredSize(new Dimension(500, 500));
+
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         createComponents(frame.getContentPane());
+
         frame.pack();
         frame.setVisible(true);
     }
 
+    public void createComponents(Container container) {
+        BoxLayout layout = new BoxLayout(container, BoxLayout.Y_AXIS);
+        container.setLayout(layout);
+        JLabel areYou = new JLabel("Are you?");
+        JCheckBox yes = new JCheckBox("Yes!");
+        JCheckBox no = new JCheckBox("No!");
+        JLabel why = new JLabel("Why?");
+        ButtonGroup buttons = new ButtonGroup();
+        JRadioButton noReason = new JRadioButton("No reason.");
+        JRadioButton because = new JRadioButton("Because it is fun!");
+        buttons.add(noReason);
+        buttons.add(because);
+        JButton done = new JButton("Done!");
+        container.add(areYou);
+        container.add(yes);
+        container.add(no);
+        container.add(why);
+        container.add(noReason);
+        container.add(because);
+        container.add(done);
+    }
 
     public JFrame getFrame() {
         return frame;
-    }
-
-    private void createComponents(Container contentPane) {
-        BoxLayout layout = new BoxLayout(contentPane, BoxLayout.Y_AXIS);
-        contentPane.setLayout(layout);
-        
-        JLabel text = new JLabel("Are you?");
-        JCheckBox yes = new JCheckBox("Yes!");
-        JCheckBox no = new JCheckBox("No!");
-        JLabel text2 = new JLabel("Why?");
-        ButtonGroup b = new ButtonGroup();
-        JRadioButton no_reason = new JRadioButton("No reason.");
-        JRadioButton because = new JRadioButton("Because it is fun!");
-        b.add(no_reason);
-        b.add(because);
-        contentPane.add(text);
-        contentPane.add(yes);
-        contentPane.add(no);
-        contentPane.add(text2);
-        contentPane.add(no_reason);
-        contentPane.add(because);
-        JButton done = new JButton("Done!");
-        contentPane.add(done);
     }
 }

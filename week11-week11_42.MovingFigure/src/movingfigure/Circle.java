@@ -9,11 +9,11 @@ import java.awt.Graphics;
 
 /**
  *
- * @author kevin0110w
+ * @author woohoo
  */
 public class Circle extends Figure {
     private int diameter;
-    
+
     public Circle(int x, int y, int diameter) {
         super(x, y);
         this.diameter = diameter;
@@ -21,7 +21,7 @@ public class Circle extends Figure {
     
     @Override
     public void draw(Graphics graphics) {
-        graphics.fillOval(this.x, this.y, this.diameter, this.diameter);
+        graphics.fillOval(x, y, diameter, diameter);
     }
     
 }
